@@ -1,0 +1,2403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Container Design System</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef1f5;
+    color:#1d2939;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    height:60px;
+    background:#101828;
+    color:white;
+    display:flex;
+    align-items:center;
+    padding:0 22px;
+    font-size:19px;
+    font-weight:700;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    display:flex;
+    height:calc(100vh - 60px);
+}
+
+/* =========================
+   LEFT PANEL
+========================= */
+
+.left-panel{
+    width:330px;
+    background:white;
+    border-right:1px solid #d0d5dd;
+    overflow-y:auto;
+    padding:18px;
+}
+
+.section-title{
+    font-size:13px;
+    font-weight:700;
+    color:#475467;
+    margin-top:20px;
+    margin-bottom:9px;
+    text-transform:uppercase;
+}
+
+.field{
+    margin-bottom:10px;
+}
+
+.field label{
+    display:block;
+    font-size:12px;
+    font-weight:600;
+    margin-bottom:5px;
+}
+
+input,
+select{
+    width:100%;
+    height:34px;
+    border:1px solid #d0d5dd;
+    border-radius:5px;
+    padding:6px 8px;
+    background:white;
+    font-size:13px;
+}
+
+/* =========================
+   ITEM ROW
+========================= */
+
+.item-row{
+    display:grid;
+    grid-template-columns:1fr 70px 60px;
+    gap:6px;
+    align-items:center;
+    margin-bottom:6px;
+}
+
+.item-name{
+    font-size:12px;
+    font-weight:500;
+}
+
+.yesno{
+    height:30px;
+    font-size:11px;
+}
+
+.qty{
+    height:30px;
+    text-align:center;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.create-btn{
+    width:100%;
+    margin-top:18px;
+    height:42px;
+    background:#155eef;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.create-btn:hover{
+    background:#004eea;
+}
+
+.clear-btn{
+    width:100%;
+    margin-top:7px;
+    height:36px;
+    background:#f2f4f7;
+    color:#344054;
+    border:1px solid #d0d5dd;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* =========================
+   CENTER WORKSPACE
+========================= */
+
+.workspace{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+}
+
+.toolbar{
+    height:50px;
+    background:white;
+    border-bottom:1px solid #d0d5dd;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:0 14px;
+}
+
+.toolbar button{
+    background:#f2f4f7;
+    border:1px solid #d0d5dd;
+    border-radius:5px;
+    padding:7px 10px;
+    cursor:pointer;
+    font-size:12px;
+}
+
+.zoom-text{
+    margin-left:auto;
+    font-size:12px;
+    color:#667085;
+}
+
+.canvas-area{
+    flex:1;
+    overflow:auto;
+    padding:30px;
+    background:
+    linear-gradient(#e4e7ec 1px,transparent 1px),
+    linear-gradient(90deg,#e4e7ec 1px,transparent 1px);
+    background-size:20px 20px;
+}
+
+.canvas-box{
+    width:max-content;
+    background:white;
+    padding:25px;
+    box-shadow:0 4px 18px rgba(0,0,0,.12);
+}
+
+#planCanvas{
+    display:block;
+    background:white;
+}
+
+/* =========================
+   RIGHT PANEL
+========================= */
+
+.right-panel{
+    width:260px;
+    background:white;
+    border-left:1px solid #d0d5dd;
+    padding:18px;
+    overflow-y:auto;
+}
+
+.right-title{
+    font-size:16px;
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+.info{
+    font-size:12px;
+    color:#667085;
+    line-height:1.6;
+}
+
+.property-box{
+    display:none;
+}
+
+.property-box label{
+    display:block;
+    font-size:11px;
+    font-weight:600;
+    margin-top:10px;
+    margin-bottom:4px;
+}
+
+.delete-btn{
+    width:100%;
+    margin-top:15px;
+    background:#fee4e2;
+    color:#b42318;
+    border:1px solid #fecdca;
+    height:34px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.note{
+    margin-top:15px;
+    padding:9px;
+    background:#f8f9fc;
+    border:1px solid #eaecf0;
+    border-radius:5px;
+    font-size:11px;
+    color:#667085;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ======================================================
+     HEADER
+====================================================== -->
+
+<div class="header">
+
+    Container Design System
+
+</div>
+
+
+<div class="main">
+
+
+<!-- ======================================================
+     LEFT PANEL
+====================================================== -->
+
+<div class="left-panel">
+
+
+<!-- PROJECT -->
+
+<div class="section-title">
+    Project Type
+</div>
+
+
+<div class="field">
+
+<label>
+    What are you designing?
+</label>
+
+<select id="projectType">
+
+<option value="office">
+    Office
+</option>
+
+<option value="house">
+    House
+</option>
+
+<option value="cafe">
+    Café
+</option>
+
+<option value="toilet">
+    Toilet / Washroom
+</option>
+
+<option value="custom">
+    Custom Structure
+</option>
+
+</select>
+
+</div>
+
+
+<!-- CONTAINER -->
+
+<div class="section-title">
+    Container / Structure Size
+</div>
+
+
+<div class="field">
+
+<label>
+    Length (ft)
+</label>
+
+<input
+    type="number"
+    id="length"
+    value="20"
+    step="0.1"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Width (ft)
+</label>
+
+<input
+    type="number"
+    id="width"
+    value="8"
+    step="0.1"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Height (ft)
+</label>
+
+<input
+    type="number"
+    id="height"
+    value="8.5"
+    step="0.1"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Wall Thickness (mm)
+</label>
+
+<input
+    type="number"
+    id="wall"
+    value="100"
+>
+
+</div>
+
+
+<!-- ======================================================
+     ROOMS / STRUCTURE
+====================================================== -->
+
+<div class="section-title">
+    Rooms / Structure
+</div>
+
+
+<div id="rooms"></div>
+
+
+<!-- ======================================================
+     DOORS WINDOWS
+====================================================== -->
+
+<div class="section-title">
+    Doors & Windows
+</div>
+
+
+<div id="doors"></div>
+
+
+<!-- ======================================================
+     FURNITURE
+====================================================== -->
+
+<div class="section-title">
+    Furniture
+</div>
+
+
+<div id="furniture"></div>
+
+
+<!-- ======================================================
+     ELECTRICAL
+====================================================== -->
+
+<div class="section-title">
+    Electrical
+</div>
+
+
+<div id="electrical"></div>
+
+
+<!-- ======================================================
+     PLUMBING
+====================================================== -->
+
+<div class="section-title">
+    Plumbing
+</div>
+
+
+<div id="plumbing"></div>
+
+
+<!-- ======================================================
+     BUTTONS
+====================================================== -->
+
+<button
+    class="create-btn"
+    onclick="createFloorPlan()"
+>
+    CREATE FLOOR PLAN
+</button>
+
+
+<button
+    class="clear-btn"
+    onclick="clearPlan()"
+>
+    CLEAR DESIGN
+</button>
+
+
+</div>
+
+
+<!-- ======================================================
+     WORKSPACE
+====================================================== -->
+
+<div class="workspace">
+
+
+<div class="toolbar">
+
+<button onclick="zoomIn()">
+    ＋ Zoom
+</button>
+
+<button onclick="zoomOut()">
+    － Zoom
+</button>
+
+<button onclick="resetZoom()">
+    Reset
+</button>
+
+<span
+    class="zoom-text"
+    id="zoomText"
+>
+    100%
+</span>
+
+</div>
+
+
+<div class="canvas-area">
+
+
+<div class="canvas-box">
+
+<canvas
+    id="planCanvas"
+    width="1100"
+    height="650"
+>
+</canvas>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- ======================================================
+     RIGHT PANEL
+====================================================== -->
+
+<div class="right-panel">
+
+
+<div class="right-title">
+    Object Properties
+</div>
+
+
+<div
+    class="info"
+    id="emptyInfo"
+>
+
+Select any object on the floor plan.
+
+<br><br>
+
+You can move the selected object with your mouse.
+
+<br><br>
+
+You can also change:
+
+<br>
+• Width
+<br>
+• Depth
+<br>
+• X Position
+<br>
+• Y Position
+<br>
+• Rotation
+
+</div>
+
+
+<div
+    class="property-box"
+    id="propertyBox"
+>
+
+
+<div class="field">
+
+<label>
+    Object Name
+</label>
+
+<input
+    id="objectName"
+    oninput="updateObject()"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Width (ft)
+</label>
+
+<input
+    type="number"
+    id="objectWidth"
+    step="0.1"
+    oninput="updateObject()"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Depth (ft)
+</label>
+
+<input
+    type="number"
+    id="objectDepth"
+    step="0.1"
+    oninput="updateObject()"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    X Position (ft)
+</label>
+
+<input
+    type="number"
+    id="objectX"
+    step="0.1"
+    oninput="updateObject()"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Y Position (ft)
+</label>
+
+<input
+    type="number"
+    id="objectY"
+    step="0.1"
+    oninput="updateObject()"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Rotation
+</label>
+
+<select
+    id="objectRotation"
+    onchange="updateObject()"
+>
+
+<option value="0">0°</option>
+
+<option value="90">90°</option>
+
+<option value="180">180°</option>
+
+<option value="270">270°</option>
+
+</select>
+
+</div>
+
+
+<button
+    class="delete-btn"
+    onclick="deleteObject()"
+>
+    DELETE OBJECT
+</button>
+
+
+</div>
+
+
+<div class="note">
+
+<strong>Tip:</strong>
+
+Select an object and drag it anywhere inside the container.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* ======================================================
+   ITEM LISTS
+====================================================== */
+
+
+const categories = {
+
+    rooms: [
+
+        "Partition",
+        "Room",
+        "Toilet",
+        "Kitchen",
+        "Store",
+        "Reception"
+
+    ],
+
+    doors: [
+
+        "Single Door",
+        "Double Door",
+        "Sliding Door",
+        "Window",
+        "Ventilator"
+
+    ],
+
+    furniture: [
+
+        "Table",
+        "Chair",
+        "Sofa",
+        "Bed",
+        "Cupboard",
+        "Kitchen Platform",
+        "Dining Table",
+        "Counter"
+
+    ],
+
+    electrical: [
+
+        "Fan",
+        "Light",
+        "AC",
+        "Switch",
+        "Socket"
+
+    ],
+
+    plumbing: [
+
+        "WC",
+        "Wash Basin",
+        "Shower",
+        "Sink",
+        "Floor Drain"
+
+    ]
+
+};
+
+
+/* ======================================================
+   CREATE YES / NO CONTROLS
+====================================================== */
+
+
+function createOptions(){
+
+    for(
+        const category in categories
+    ){
+
+        const container =
+            document.getElementById(category);
+
+        categories[category].forEach(
+            (item,index)=>{
+
+                const id =
+                    category +
+                    "_" +
+                    index;
+
+                const row =
+                    document.createElement("div");
+
+                row.className =
+                    "item-row";
+
+
+                const name =
+                    document.createElement("div");
+
+                name.className =
+                    "item-name";
+
+                name.innerText =
+                    item;
+
+
+                const select =
+                    document.createElement("select");
+
+                select.className =
+                    "yesno";
+
+                select.id =
+                    id + "_yesno";
+
+
+                select.innerHTML = `
+
+                    <option value="no">
+                        No
+                    </option>
+
+                    <option value="yes">
+                        Yes
+                    </option>
+
+                `;
+
+
+                const qty =
+                    document.createElement("input");
+
+                qty.type =
+                    "number";
+
+                qty.className =
+                    "qty";
+
+                qty.min =
+                    "1";
+
+                qty.value =
+                    "1";
+
+                qty.disabled =
+                    true;
+
+                qty.id =
+                    id + "_qty";
+
+
+                select.addEventListener(
+                    "change",
+                    function(){
+
+                        qty.disabled =
+                            this.value !== "yes";
+
+                    }
+                );
+
+
+                row.appendChild(name);
+
+                row.appendChild(select);
+
+                row.appendChild(qty);
+
+                container.appendChild(row);
+
+            }
+        );
+
+    }
+
+}
+
+
+createOptions();
+
+
+/* ======================================================
+   CANVAS
+====================================================== */
+
+
+const canvas =
+    document.getElementById("planCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+/* ======================================================
+   VARIABLES
+====================================================== */
+
+
+let planLength = 20;
+
+let planWidth = 8;
+
+let zoom = 1;
+
+const scale = 32;
+
+let objects = [];
+
+let selectedObject = null;
+
+let dragging = false;
+
+let dragOffsetX = 0;
+
+let dragOffsetY = 0;
+
+
+/* ======================================================
+   OBJECT DEFAULTS
+====================================================== */
+
+
+const defaults = {
+
+    "Partition":
+    [8,0.15],
+
+    "Room":
+    [8,6],
+
+    "Toilet":
+    [4,4],
+
+    "Kitchen":
+    [8,3],
+
+    "Store":
+    [5,4],
+
+    "Reception":
+    [6,2],
+
+    "Single Door":
+    [3,0.2],
+
+    "Double Door":
+    [5,0.2],
+
+    "Sliding Door":
+    [6,0.2],
+
+    "Window":
+    [3,0.2],
+
+    "Ventilator":
+    [2,0.2],
+
+    "Table":
+    [4,2],
+
+    "Chair":
+    [2,2],
+
+    "Sofa":
+    [6,2.5],
+
+    "Bed":
+    [6.5,3],
+
+    "Cupboard":
+    [4,1.5],
+
+    "Kitchen Platform":
+    [6,2],
+
+    "Dining Table":
+    [5,3],
+
+    "Counter":
+    [6,2],
+
+    "Fan":
+    [2,2],
+
+    "Light":
+    [1,1],
+
+    "AC":
+    [4,1],
+
+    "Switch":
+    [0.5,0.5],
+
+    "Socket":
+    [0.5,0.5],
+
+    "WC":
+    [2,3],
+
+    "Wash Basin":
+    [2,1.5],
+
+    "Shower":
+    [3,3],
+
+    "Sink":
+    [2,1.5],
+
+    "Floor Drain":
+    [1,1]
+
+};
+
+
+/* ======================================================
+   PLAN RECT
+====================================================== */
+
+
+function getPlan(){
+
+    return {
+
+        x:100,
+
+        y:150,
+
+        width:
+            planLength *
+            scale *
+            zoom,
+
+        height:
+            planWidth *
+            scale *
+            zoom
+
+    };
+
+}
+
+
+/* ======================================================
+   CREATE FLOOR PLAN
+====================================================== */
+
+
+function createFloorPlan(){
+
+    planLength =
+        parseFloat(
+            document.getElementById("length").value
+        ) || 20;
+
+
+    planWidth =
+        parseFloat(
+            document.getElementById("width").value
+        ) || 8;
+
+
+    objects = [];
+
+    selectedObject = null;
+
+
+    let startX = 1;
+
+    let startY = 1;
+
+
+    for(
+        const category in categories
+    ){
+
+        categories[category].forEach(
+            (item,index)=>{
+
+                const select =
+                    document.getElementById(
+                        category +
+                        "_" +
+                        index +
+                        "_yesno"
+                    );
+
+                const qty =
+                    document.getElementById(
+                        category +
+                        "_" +
+                        index +
+                        "_qty"
+                    );
+
+
+                if(
+                    select.value !== "yes"
+                ){
+
+                    return;
+
+                }
+
+
+                const quantity =
+                    parseInt(qty.value) || 1;
+
+
+                for(
+                    let i=0;
+                    i<quantity;
+                    i++
+                ){
+
+                    const size =
+                        defaults[item] ||
+                        [2,2];
+
+
+                    let objectX =
+                        startX;
+
+                    let objectY =
+                        startY;
+
+
+                    if(
+                        objectX +
+                        size[0] >
+                        planLength
+                    ){
+
+                        startX = 1;
+
+                        startY += 3;
+
+                        objectX = startX;
+
+                        objectY = startY;
+
+                    }
+
+
+                    if(
+                        objectY +
+                        size[1] >
+                        planWidth
+                    ){
+
+                        objectX = 1;
+
+                        objectY = 1;
+
+                    }
+
+
+                    objects.push({
+
+                        id:
+                            Date.now() +
+                            Math.random(),
+
+                        name:item,
+
+                        width:size[0],
+
+                        depth:size[1],
+
+                        x:objectX,
+
+                        y:objectY,
+
+                        rotation:0,
+
+                        type:item
+
+                    });
+
+
+                    startX +=
+                        size[0] + 0.5;
+
+                }
+
+            }
+        );
+
+    }
+
+
+    resizeCanvas();
+
+    drawPlan();
+
+    showProperties();
+
+}
+
+
+/* ======================================================
+   DRAW PLAN
+====================================================== */
+
+
+function drawPlan(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    const p =
+        getPlan();
+
+
+    /* TITLE */
+
+    ctx.textAlign =
+        "center";
+
+    ctx.fillStyle =
+        "#9b2945";
+
+    ctx.font =
+        "bold 24px Arial";
+
+
+    const type =
+        document.getElementById(
+            "projectType"
+        ).value;
+
+
+    let title =
+        type.toUpperCase();
+
+
+    ctx.fillText(
+        title,
+        p.x + p.width/2,
+        45
+    );
+
+
+    ctx.font =
+        "bold 17px Arial";
+
+
+    ctx.fillText(
+        planLength +
+        "' X " +
+        planWidth +
+        "'",
+        p.x + p.width/2,
+        75
+    );
+
+
+    /* FLOOR */
+
+    ctx.fillStyle =
+        "#ffffff";
+
+    ctx.fillRect(
+        p.x,
+        p.y,
+        p.width,
+        p.height
+    );
+
+
+    /* WALL */
+
+    ctx.strokeStyle =
+        "#754c3d";
+
+    ctx.lineWidth =
+        8;
+
+    ctx.strokeRect(
+        p.x,
+        p.y,
+        p.width,
+        p.height
+    );
+
+
+    /* INNER BORDER */
+
+    ctx.strokeStyle =
+        "#c7a99b";
+
+    ctx.lineWidth =
+        1;
+
+    ctx.strokeRect(
+        p.x + 4,
+        p.y + 4,
+        p.width - 8,
+        p.height - 8
+    );
+
+
+    /* DIMENSIONS */
+
+    drawDimensions(p);
+
+
+    /* OBJECTS */
+
+    objects.forEach(
+        obj => drawObject(obj)
+    );
+
+}
+
+
+/* ======================================================
+   DIMENSIONS
+====================================================== */
+
+
+function drawDimensions(p){
+
+    ctx.strokeStyle =
+        "#777";
+
+    ctx.fillStyle =
+        "#555";
+
+    ctx.lineWidth =
+        1;
+
+    ctx.font =
+        "12px Arial";
+
+
+    /* LENGTH */
+
+    const y =
+        p.y - 30;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        p.x,
+        y
+    );
+
+    ctx.lineTo(
+        p.x + p.width,
+        y
+    );
+
+    ctx.stroke();
+
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.fillText(
+        planLength + " ft",
+        p.x + p.width/2,
+        y - 5
+    );
+
+
+    /* WIDTH */
+
+    const x =
+        p.x - 30;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x,
+        p.y
+    );
+
+    ctx.lineTo(
+        x,
+        p.y + p.height
+    );
+
+    ctx.stroke();
+
+
+    ctx.save();
+
+    ctx.translate(
+        x - 8,
+        p.y + p.height/2
+    );
+
+    ctx.rotate(
+        -Math.PI/2
+    );
+
+
+    ctx.fillText(
+        planWidth + " ft",
+        0,
+        0
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* ======================================================
+   DRAW OBJECT
+====================================================== */
+
+
+function drawObject(obj){
+
+    const p =
+        getPlan();
+
+
+    const x =
+        p.x +
+        obj.x *
+        scale *
+        zoom;
+
+
+    const y =
+        p.y +
+        obj.y *
+        scale *
+        zoom;
+
+
+    const w =
+        obj.width *
+        scale *
+        zoom;
+
+
+    const h =
+        obj.depth *
+        scale *
+        zoom;
+
+
+    ctx.save();
+
+
+    ctx.translate(
+        x + w/2,
+        y + h/2
+    );
+
+
+    ctx.rotate(
+        obj.rotation *
+        Math.PI /
+        180
+    );
+
+
+    /* SELECTION */
+
+    if(
+        obj === selectedObject
+    ){
+
+        ctx.strokeStyle =
+            "#155eef";
+
+        ctx.lineWidth =
+            2;
+
+        ctx.setLineDash(
+            [5,4]
+        );
+
+        ctx.strokeRect(
+            -w/2 - 5,
+            -h/2 - 5,
+            w + 10,
+            h + 10
+        );
+
+        ctx.setLineDash([]);
+
+    }
+
+
+    /* =====================
+       PARTITION
+    ===================== */
+
+    if(
+        obj.type === "Partition"
+    ){
+
+        ctx.strokeStyle =
+            "#60483e";
+
+        ctx.lineWidth =
+            5;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -w/2,
+            0
+        );
+
+        ctx.lineTo(
+            w/2,
+            0
+        );
+
+        ctx.stroke();
+
+        ctx.restore();
+
+        return;
+
+    }
+
+
+    /* =====================
+       DOOR
+    ===================== */
+
+    if(
+        obj.type.includes("Door")
+    ){
+
+        ctx.strokeStyle =
+            "#9b2945";
+
+        ctx.lineWidth =
+            2;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -w/2,
+            0
+        );
+
+        ctx.lineTo(
+            w/2,
+            0
+        );
+
+        ctx.stroke();
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            -w/2,
+            0,
+            w,
+            0,
+            Math.PI/2
+        );
+
+        ctx.stroke();
+
+        ctx.restore();
+
+        return;
+
+    }
+
+
+    /* =====================
+       WINDOW
+    ===================== */
+
+    if(
+        obj.type === "Window" ||
+        obj.type === "Ventilator"
+    ){
+
+        ctx.fillStyle =
+            "#e8f5ff";
+
+        ctx.strokeStyle =
+            "#3182ce";
+
+        ctx.lineWidth =
+            4;
+
+        ctx.fillRect(
+            -w/2,
+            -h/2,
+            w,
+            h
+        );
+
+        ctx.strokeRect(
+            -w/2,
+            -h/2,
+            w,
+            h
+        );
+
+        ctx.restore();
+
+        return;
+
+    }
+
+
+    /* =====================
+       FAN
+    ===================== */
+
+    if(
+        obj.type === "Fan"
+    ){
+
+        ctx.strokeStyle =
+            "#555";
+
+        ctx.lineWidth =
+            1.5;
+
+        const r =
+            Math.min(w,h)/2;
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            0,
+            r,
+            0,
+            Math.PI*2
+        );
+
+        ctx.stroke();
+
+
+        for(
+            let i=0;
+            i<4;
+            i++
+        ){
+
+            ctx.save();
+
+            ctx.rotate(
+                i *
+                Math.PI/2
+            );
+
+            ctx.beginPath();
+
+            ctx.ellipse(
+                r*.4,
+                0,
+                r*.4,
+                r*.13,
+                0,
+                0,
+                Math.PI*2
+            );
+
+            ctx.stroke();
+
+            ctx.restore();
+
+        }
+
+
+        ctx.restore();
+
+        return;
+
+    }
+
+
+    /* =====================
+       LIGHT
+    ===================== */
+
+    if(
+        obj.type === "Light"
+    ){
+
+        ctx.strokeStyle =
+            "#d49a00";
+
+        ctx.lineWidth =
+            2;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            0,
+            Math.min(w,h)/2,
+            0,
+            Math.PI*2
+        );
+
+        ctx.stroke();
+
+
+        ctx.restore();
+
+        return;
+
+    }
+
+
+    /* =====================
+       WC
+    ===================== */
+
+    if(
+        obj.type === "WC"
+    ){
+
+        ctx.strokeStyle =
+            "#555";
+
+        ctx.lineWidth =
+            1.5;
+
+        ctx.strokeRect(
+            -w/2,
+            -h/2,
+            w,
+            h
+        );
+
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            0,
+            0,
+            w*.28,
+            h*.30,
+            0,
+            0,
+            Math.PI*2
+        );
+
+        ctx.stroke();
+
+
+        ctx.restore();
+
+        return;
+
+    }
+
+
+    /* =====================
+       GENERAL FURNITURE
+    ===================== */
+
+    ctx.fillStyle =
+        "#f5f5f5";
+
+    ctx.strokeStyle =
+        "#777";
+
+    ctx.lineWidth =
+        1.5;
+
+
+    ctx.fillRect(
+        -w/2,
+        -h/2,
+        w,
+        h
+    );
+
+
+    ctx.strokeRect(
+        -w/2,
+        -h/2,
+        w,
+        h
+    );
+
+
+    ctx.fillStyle =
+        "#555";
+
+    ctx.font =
+        "10px Arial";
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.fillText(
+        obj.name,
+        0,
+        4
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* ======================================================
+   MOUSE HIT TEST
+====================================================== */
+
+
+function hitObject(
+    obj,
+    mouseX,
+    mouseY
+){
+
+    const p =
+        getPlan();
+
+
+    const x =
+        p.x +
+        obj.x *
+        scale *
+        zoom;
+
+
+    const y =
+        p.y +
+        obj.y *
+        scale *
+        zoom;
+
+
+    const w =
+        obj.width *
+        scale *
+        zoom;
+
+
+    const h =
+        obj.depth *
+        scale *
+        zoom;
+
+
+    return (
+
+        mouseX >= x - 8 &&
+
+        mouseX <= x + w + 8 &&
+
+        mouseY >= y - 8 &&
+
+        mouseY <= y + h + 8
+
+    );
+
+}
+
+
+/* ======================================================
+   MOUSE POSITION
+====================================================== */
+
+
+function mousePosition(event){
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+
+    const mouseX =
+        event.clientX -
+        rect.left;
+
+
+    const mouseY =
+        event.clientY -
+        rect.top;
+
+
+    const p =
+        getPlan();
+
+
+    return {
+
+        px:mouseX,
+
+        py:mouseY,
+
+        x:
+            (mouseX-p.x) /
+            (scale*zoom),
+
+        y:
+            (mouseY-p.y) /
+            (scale*zoom)
+
+    };
+
+}
+
+
+/* ======================================================
+   MOUSE DOWN
+====================================================== */
+
+
+canvas.addEventListener(
+    "mousedown",
+    function(event){
+
+        const m =
+            mousePosition(event);
+
+
+        selectedObject =
+            null;
+
+
+        for(
+            let i=objects.length-1;
+            i>=0;
+            i--
+        ){
+
+            if(
+                hitObject(
+                    objects[i],
+                    m.px,
+                    m.py
+                )
+            ){
+
+                selectedObject =
+                    objects[i];
+
+                dragging =
+                    true;
+
+
+                dragOffsetX =
+                    m.x -
+                    selectedObject.x;
+
+
+                dragOffsetY =
+                    m.y -
+                    selectedObject.y;
+
+
+                break;
+
+            }
+
+        }
+
+
+        showProperties();
+
+        drawPlan();
+
+    }
+);
+
+
+/* ======================================================
+   MOUSE MOVE
+====================================================== */
+
+
+canvas.addEventListener(
+    "mousemove",
+    function(event){
+
+        if(
+            !dragging ||
+            !selectedObject
+        ){
+
+            return;
+
+        }
+
+
+        const m =
+            mousePosition(event);
+
+
+        selectedObject.x =
+            m.x -
+            dragOffsetX;
+
+
+        selectedObject.y =
+            m.y -
+            dragOffsetY;
+
+
+        /* Keep inside container */
+
+        selectedObject.x =
+            Math.max(
+                0,
+                Math.min(
+                    selectedObject.x,
+                    planLength -
+                    selectedObject.width
+                )
+            );
+
+
+        selectedObject.y =
+            Math.max(
+                0,
+                Math.min(
+                    selectedObject.y,
+                    planWidth -
+                    selectedObject.depth
+                )
+            );
+
+
+        showProperties();
+
+        drawPlan();
+
+    }
+);
+
+
+/* ======================================================
+   MOUSE UP
+====================================================== */
+
+
+canvas.addEventListener(
+    "mouseup",
+    function(){
+
+        dragging =
+            false;
+
+    }
+);
+
+
+canvas.addEventListener(
+    "mouseleave",
+    function(){
+
+        dragging =
+            false;
+
+    }
+);
+
+
+/* ======================================================
+   PROPERTIES
+====================================================== */
+
+
+function showProperties(){
+
+    const empty =
+        document.getElementById(
+            "emptyInfo"
+        );
+
+    const box =
+        document.getElementById(
+            "propertyBox"
+        );
+
+
+    if(
+        !selectedObject
+    ){
+
+        empty.style.display =
+            "block";
+
+        box.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    empty.style.display =
+        "none";
+
+    box.style.display =
+        "block";
+
+
+    document.getElementById(
+        "objectName"
+    ).value =
+        selectedObject.name;
+
+
+    document.getElementById(
+        "objectWidth"
+    ).value =
+        selectedObject.width;
+
+
+    document.getElementById(
+        "objectDepth"
+    ).value =
+        selectedObject.depth;
+
+
+    document.getElementById(
+        "objectX"
+    ).value =
+        selectedObject.x.toFixed(2);
+
+
+    document.getElementById(
+        "objectY"
+    ).value =
+        selectedObject.y.toFixed(2);
+
+
+    document.getElementById(
+        "objectRotation"
+    ).value =
+        selectedObject.rotation;
+
+}
+
+
+/* ======================================================
+   UPDATE OBJECT
+====================================================== */
+
+
+function updateObject(){
+
+    if(
+        !selectedObject
+    ){
+
+        return;
+
+    }
+
+
+    selectedObject.name =
+        document.getElementById(
+            "objectName"
+        ).value;
+
+
+    selectedObject.width =
+        parseFloat(
+            document.getElementById(
+                "objectWidth"
+            ).value
+        ) || 1;
+
+
+    selectedObject.depth =
+        parseFloat(
+            document.getElementById(
+                "objectDepth"
+            ).value
+        ) || 1;
+
+
+    selectedObject.x =
+        parseFloat(
+            document.getElementById(
+                "objectX"
+            ).value
+        ) || 0;
+
+
+    selectedObject.y =
+        parseFloat(
+            document.getElementById(
+                "objectY"
+            ).value
+        ) || 0;
+
+
+    selectedObject.rotation =
+        parseInt(
+            document.getElementById(
+                "objectRotation"
+            ).value
+        ) || 0;
+
+
+    drawPlan();
+
+}
+
+
+/* ======================================================
+   DELETE OBJECT
+====================================================== */
+
+
+function deleteObject(){
+
+    if(
+        !selectedObject
+    ){
+
+        return;
+
+    }
+
+
+    objects =
+        objects.filter(
+            obj =>
+                obj !== selectedObject
+        );
+
+
+    selectedObject =
+        null;
+
+
+    showProperties();
+
+    drawPlan();
+
+}
+
+
+/* ======================================================
+   CLEAR PLAN
+====================================================== */
+
+
+function clearPlan(){
+
+    objects = [];
+
+    selectedObject =
+        null;
+
+    showProperties();
+
+    drawPlan();
+
+}
+
+
+/* ======================================================
+   ZOOM
+====================================================== */
+
+
+function zoomIn(){
+
+    zoom += 0.1;
+
+    if(
+        zoom > 2
+    ){
+
+        zoom = 2;
+
+    }
+
+    resizeCanvas();
+
+    drawPlan();
+
+    updateZoom();
+
+}
+
+
+function zoomOut(){
+
+    zoom -= 0.1;
+
+    if(
+        zoom < 0.5
+    ){
+
+        zoom = 0.5;
+
+    }
+
+    resizeCanvas();
+
+    drawPlan();
+
+    updateZoom();
+
+}
+
+
+function resetZoom(){
+
+    zoom = 1;
+
+    resizeCanvas();
+
+    drawPlan();
+
+    updateZoom();
+
+}
+
+
+function updateZoom(){
+
+    document.getElementById(
+        "zoomText"
+    ).innerText =
+        Math.round(
+            zoom*100
+        ) + "%";
+
+}
+
+
+/* ======================================================
+   CANVAS SIZE
+====================================================== */
+
+
+function resizeCanvas(){
+
+    const p =
+        getPlan();
+
+
+    canvas.width =
+        Math.max(
+            1100,
+            p.x +
+            p.width +
+            100
+        );
+
+
+    canvas.height =
+        Math.max(
+            650,
+            p.y +
+            p.height +
+            100
+        );
+
+}
+
+
+/* ======================================================
+   INITIAL
+====================================================== */
+
+
+resizeCanvas();
+
+drawPlan();
+
+showProperties();
+
+</script>
+
+
+</body>
+</html>
