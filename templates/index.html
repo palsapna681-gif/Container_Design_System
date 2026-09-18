@@ -1,19 +1,624 @@
-    const scale = Math.min(
-        500 / width,
-        300 / height
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Container 2D Drawing Generator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .header {
+            background: #12345b;
+            color: white;
+            padding: 18px 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+            opacity: 0.85;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .controls {
+            width: 340px;
+            flex-shrink: 0;
+        }
+
+        .drawing-area {
+            flex: 1;
+            min-height: 650px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #12345b;
+        }
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 9px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .row .field {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #f28c28;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #d97716;
+        }
+
+        #drawing,
+        #topDrawing,
+        #sideDrawing {
+            width: 100%;
+            height: 560px;
+            border: 1px solid #ddd;
+            background: white;
+        }
+
+        #topDrawing,
+        #sideDrawing {
+            height: 500px;
+        }
+
+        .info {
+            margin-top: 12px;
+            background: #eef5ff;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .elevation-section {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        .elevation-section h3 {
+            margin: 0 0 10px 0;
+        }
+
+        @media(max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .controls {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Container 2D Drawing Generator</h1>
+        <p>Enter dimensions and generate an automatic 2D container drawing</p>
+    </div>
+
+    <div class="container">
+
+        <!-- LEFT SIDE -->
+        <div class="panel controls">
+
+            <h2>Product Details</h2>
+
+            <div class="section-title">
+                Container Dimensions
+            </div>
+
+            <div class="row">
+
+                <div class="field">
+                    <label>Length (ft)</label>
+
+                    <input
+                        type="number"
+                        id="length"
+                        value="20"
+                        step="0.1"
+                    >
+                </div>
+
+                <div class="field">
+                    <label>Width (ft)</label>
+
+                    <input
+                        type="number"
+                        id="width"
+                        value="8"
+                        step="0.1"
+                    >
+                </div>
+
+            </div>
+
+            <div class="field">
+                <label>Height (ft)</label>
+
+                <input
+                    type="number"
+                    id="height"
+                    value="8.5"
+                    step="0.1"
+                >
+            </div>
+
+
+            <div class="section-title">
+                Door
+            </div>
+
+            <div class="field">
+                <label>Number of Doors</label>
+
+                <input
+                    type="number"
+                    id="doors"
+                    value="1"
+                    min="0"
+                >
+            </div>
+
+            <div class="row">
+
+                <div class="field">
+
+                    <label>Door Width (ft)</label>
+
+                    <input
+                        type="number"
+                        id="doorWidth"
+                        value="3"
+                        step="0.1"
+                    >
+
+                    <label>Door Position</label>
+
+                    <select id="doorPosition">
+
+                        <option value="left">
+                            Left
+                        </option>
+
+                        <option value="center" selected>
+                            Center
+                        </option>
+
+                        <option value="right">
+                            Right
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="field">
+
+                    <label>Door Height (ft)</label>
+
+                    <input
+                        type="number"
+                        id="doorHeight"
+                        value="7"
+                        step="0.1"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="section-title">
+                Windows
+            </div>
+
+            <div class="field">
+
+                <label>Number of Windows</label>
+
+                <input
+                    type="number"
+                    id="windows"
+                    value="2"
+                    min="0"
+                >
+
+            </div>
+
+            <div class="row">
+
+                <div class="field">
+
+                    <label>Window Width (ft)</label>
+
+                    <input
+                        type="number"
+                        id="windowWidth"
+                        value="4"
+                        step="0.1"
+                    >
+
+                </div>
+
+                <div class="field">
+
+                    <label>Window Height (ft)</label>
+
+                    <input
+                        type="number"
+                        id="windowHeight"
+                        value="3"
+                        step="0.1"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="section-title">
+                Partition
+            </div>
+
+            <div class="field">
+
+                <label>Partition</label>
+
+                <select id="partition">
+
+                    <option value="yes">
+                        Yes
+                    </option>
+
+                    <option value="no">
+                        No
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="section-title">
+                Material Thickness
+            </div>
+
+            <div class="field">
+
+                <label>Floor Thickness (mm)</label>
+
+                <input
+                    type="number"
+                    id="floor"
+                    value="18"
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label>Roof Sheet (mm)</label>
+
+                <input
+                    type="number"
+                    id="roof"
+                    value="2"
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label>Wall Sheet (mm)</label>
+
+                <input
+                    type="number"
+                    id="wall"
+                    value="2"
+                >
+
+            </div>
+
+
+            <button onclick="generateDrawing()">
+                UPDATE DRAWING
+            </button>
+
+
+            <div class="info">
+
+                Change any dimension and click
+                <b>UPDATE DRAWING</b>
+                to regenerate the drawing.
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="panel drawing-area">
+
+            <h2>
+                2D Drawing Preview
+            </h2>
+
+            <!-- FRONT -->
+            <div>
+                <h3>FRONT ELEVATION</h3>
+
+                <canvas id="drawing"></canvas>
+            </div>
+
+
+            <!-- TOP -->
+            <div class="elevation-section">
+
+                <h3>
+                    TOP ELEVATION
+                </h3>
+
+                <canvas id="topDrawing"></canvas>
+
+            </div>
+
+
+            <!-- SIDE -->
+            <div class="elevation-section">
+
+                <h3>
+                    SIDE ELEVATION
+                </h3>
+
+                <canvas id="sideDrawing"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+function generateDrawing() {
+
+    const length =
+        parseFloat(
+            document.getElementById("length").value
+        );
+
+    const width =
+        parseFloat(
+            document.getElementById("width").value
+        );
+
+    const height =
+        parseFloat(
+            document.getElementById("height").value
+        );
+
+    const doors =
+        parseInt(
+            document.getElementById("doors").value
+        );
+
+    const doorWidth =
+        parseFloat(
+            document.getElementById("doorWidth").value
+        );
+
+    const doorHeight =
+        parseFloat(
+            document.getElementById("doorHeight").value
+        );
+
+    const windows =
+        parseInt(
+            document.getElementById("windows").value
+        );
+
+    const windowWidth =
+        parseFloat(
+            document.getElementById("windowWidth").value
+        );
+
+    const windowHeight =
+        parseFloat(
+            document.getElementById("windowHeight").value
+        );
+
+    const partition =
+        document.getElementById("partition").value;
+
+
+    drawFrontElevation(
+        length,
+        width,
+        height,
+        doors,
+        doorWidth,
+        doorHeight,
+        windows,
+        windowWidth,
+        windowHeight,
+        partition
     );
 
-    const x = 250;
+
+    drawTopElevation(
+        length,
+        width,
+        partition
+    );
+
+
+    drawSideElevation(
+        width,
+        height
+    );
+}
+
+
+
+// =====================================
+// FRONT ELEVATION
+// =====================================
+
+function drawFrontElevation(
+    length,
+    width,
+    height,
+    doors,
+    doorWidth,
+    doorHeight,
+    windows,
+    windowWidth,
+    windowHeight,
+    partition
+) {
+
+    const canvas =
+        document.getElementById("drawing");
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    canvas.width = 1000;
+    canvas.height = 600;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    ctx.fillStyle = "#ffffff";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    const scale =
+        Math.min(
+            650 / length,
+            350 / height
+        );
+
+
+    const x = 150;
     const y = 100;
 
+
     const drawWidth =
-        width * scale;
+        length * scale;
 
     const drawHeight =
         height * scale;
 
-    // CONTAINER SIDE
-    ctx.strokeStyle = "#000000";
+
+    // TITLE
+
+    ctx.fillStyle = "#000000";
+
+    ctx.font =
+        "bold 18px Arial";
+
+    ctx.fillText(
+        "FRONT ELEVATION",
+        x,
+        y - 35
+    );
+
+
+    // CONTAINER
+
+    ctx.strokeStyle =
+        "#000000";
 
     ctx.lineWidth = 2;
 
@@ -24,40 +629,296 @@
         drawHeight
     );
 
-    // WIDTH DIMENSION
-    const widthY =
-        y + drawHeight + 40;
+
+    // DOOR
+
+    if (doors > 0) {
+
+        const dWidth =
+            doorWidth * scale;
+
+        const dHeight =
+            doorHeight * scale;
+
+
+        const doorPosition =
+            document.getElementById(
+                "doorPosition"
+            ).value;
+
+
+        let dx;
+
+
+        if (doorPosition === "left") {
+
+            dx =
+                x + 20;
+
+        }
+        else if (doorPosition === "right") {
+
+            dx =
+                x +
+                drawWidth -
+                dWidth -
+                20;
+
+        }
+        else {
+
+            dx =
+                x +
+                drawWidth / 2 -
+                dWidth / 2;
+
+        }
+
+
+        const dy =
+            y +
+            drawHeight -
+            dHeight;
+
+
+        ctx.fillStyle =
+            "#eeeeee";
+
+        ctx.fillRect(
+            dx,
+            dy,
+            dWidth,
+            dHeight
+        );
+
+
+        ctx.strokeStyle =
+            "#000000";
+
+        ctx.strokeRect(
+            dx,
+            dy,
+            dWidth,
+            dHeight
+        );
+
+
+        ctx.fillStyle =
+            "#000000";
+
+        ctx.font =
+            "12px Arial";
+
+
+        ctx.fillText(
+            "DOOR",
+            dx + 5,
+            dy + dHeight / 2
+        );
+
+    }
+
+
+    // WINDOWS
+
+    if (windows > 0) {
+
+        const wWidth =
+            windowWidth * scale;
+
+        const wHeight =
+            windowHeight * scale;
+
+
+        const positions =
+            [0.22, 0.78];
+
+
+        for (
+            let i = 0;
+            i < Math.min(windows, 2);
+            i++
+        ) {
+
+            const wx =
+                x +
+                drawWidth *
+                positions[i] -
+                wWidth / 2;
+
+
+            const wy =
+                y +
+                drawHeight *
+                0.25;
+
+
+            ctx.fillStyle =
+                "#eeeeee";
+
+
+            ctx.fillRect(
+                wx,
+                wy,
+                wWidth,
+                wHeight
+            );
+
+
+            ctx.strokeStyle =
+                "#000000";
+
+
+            ctx.strokeRect(
+                wx,
+                wy,
+                wWidth,
+                wHeight
+            );
+
+
+            // Horizontal line
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                wx,
+                wy + wHeight / 2
+            );
+
+            ctx.lineTo(
+                wx + wWidth,
+                wy + wHeight / 2
+            );
+
+            ctx.stroke();
+
+
+            // Vertical line
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                wx + wWidth / 2,
+                wy
+            );
+
+            ctx.lineTo(
+                wx + wWidth / 2,
+                wy + wHeight
+            );
+
+            ctx.stroke();
+
+        }
+
+    }
+
+
+    // PARTITION
+
+    if (partition === "yes") {
+
+        const px =
+            x +
+            drawWidth / 2;
+
+
+        ctx.setLineDash(
+            [8, 6]
+        );
+
+
+        ctx.strokeStyle =
+            "#000000";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            px,
+            y
+        );
+
+        ctx.lineTo(
+            px,
+            y + drawHeight
+        );
+
+        ctx.stroke();
+
+
+        ctx.setLineDash([]);
+
+
+        ctx.fillStyle =
+            "#000000";
+
+        ctx.font =
+            "12px Arial";
+
+
+        ctx.fillText(
+            "PARTITION",
+            px + 5,
+            y + 20
+        );
+
+    }
+
+
+    // LENGTH
+
+    const lengthY =
+        y +
+        drawHeight +
+        40;
+
+
+    ctx.strokeStyle =
+        "#000000";
 
     ctx.lineWidth = 1;
+
 
     ctx.beginPath();
 
     ctx.moveTo(
         x,
-        widthY
+        lengthY
     );
 
     ctx.lineTo(
         x + drawWidth,
-        widthY
+        lengthY
     );
 
     ctx.stroke();
 
-    // WIDTH TEXT
-    ctx.fillStyle = "#000000";
 
-    ctx.font = "14px Arial";
+    ctx.fillStyle =
+        "#000000";
+
+    ctx.font =
+        "14px Arial";
+
 
     ctx.fillText(
-        "Width: " + width + " ft",
-        x + drawWidth / 2 - 40,
-        widthY + 25
+        "Length: " +
+        length +
+        " ft",
+        x +
+        drawWidth / 2 -
+        45,
+        lengthY + 25
     );
 
-    // HEIGHT DIMENSION
+
+    // HEIGHT
+
     const heightX =
         x - 40;
+
 
     ctx.beginPath();
 
@@ -73,25 +934,541 @@
 
     ctx.stroke();
 
-    // HEIGHT TEXT
+
     ctx.save();
+
 
     ctx.translate(
         heightX - 15,
         y + drawHeight / 2
     );
 
-    ctx.rotate(-Math.PI / 2);
+
+    ctx.rotate(
+        -Math.PI / 2
+    );
+
 
     ctx.fillText(
-        "Height: " + height + " ft",
+        "Height: " +
+        height +
+        " ft",
         0,
         0
     );
 
+
     ctx.restore();
 
+
+    // INFORMATION
+
+    ctx.fillText(
+        "Width: " +
+        width +
+        " ft",
+        x,
+        y +
+        drawHeight +
+        70
+    );
+
+
+    ctx.fillText(
+        "Floor: " +
+        document.getElementById(
+            "floor"
+        ).value +
+        " mm",
+        x,
+        y +
+        drawHeight +
+        100
+    );
+
+
+    ctx.fillText(
+        "Roof: " +
+        document.getElementById(
+            "roof"
+        ).value +
+        " mm",
+        x + 150,
+        y +
+        drawHeight +
+        100
+    );
+
+
+    ctx.fillText(
+        "Wall: " +
+        document.getElementById(
+            "wall"
+        ).value +
+        " mm",
+        x + 300,
+        y +
+        drawHeight +
+        100
+    );
+
+}
+
+
+
+// =====================================
+// TOP ELEVATION
+// =====================================
+
+function drawTopElevation(
+    length,
+    width,
+    partition
+) {
+
+    const canvas =
+        document.getElementById(
+            "topDrawing"
+        );
+
+
+    if (!canvas) {
+        return;
+    }
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    canvas.width = 1000;
+    canvas.height = 500;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    ctx.fillStyle =
+        "#ffffff";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    // TITLE
+
+    ctx.fillStyle =
+        "#000000";
+
+    ctx.font =
+        "bold 18px Arial";
+
+
+    ctx.fillText(
+        "TOP ELEVATION",
+        420,
+        35
+    );
+
+
+    // SCALE
+
+    const scale =
+        Math.min(
+            650 / length,
+            250 / width
+        );
+
+
+    const x = 150;
+    const y = 100;
+
+
+    const drawWidth =
+        length * scale;
+
+    const drawHeight =
+        width * scale;
+
+
+    // CONTAINER
+
+    ctx.strokeStyle =
+        "#000000";
+
+    ctx.lineWidth = 2;
+
+
+    ctx.strokeRect(
+        x,
+        y,
+        drawWidth,
+        drawHeight
+    );
+
+
+    // PARTITION
+
+    if (partition === "yes") {
+
+        const px =
+            x +
+            drawWidth / 2;
+
+
+        ctx.setLineDash(
+            [8, 6]
+        );
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            px,
+            y
+        );
+
+        ctx.lineTo(
+            px,
+            y + drawHeight
+        );
+
+        ctx.stroke();
+
+
+        ctx.setLineDash([]);
+
+
+        ctx.fillStyle =
+            "#000000";
+
+        ctx.font =
+            "12px Arial";
+
+
+        ctx.fillText(
+            "PARTITION",
+            px + 5,
+            y + 20
+        );
+
+    }
+
+
+    // LENGTH
+
+    const lengthY =
+        y +
+        drawHeight +
+        40;
+
+
+    ctx.lineWidth = 1;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x,
+        lengthY
+    );
+
+    ctx.lineTo(
+        x + drawWidth,
+        lengthY
+    );
+
+    ctx.stroke();
+
+
+    ctx.fillStyle =
+        "#000000";
+
+    ctx.font =
+        "14px Arial";
+
+
+    ctx.fillText(
+        "Length: " +
+        length +
+        " ft",
+        x +
+        drawWidth / 2 -
+        45,
+        lengthY + 25
+    );
+
+
+    // WIDTH
+
+    const widthX =
+        x - 40;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        widthX,
+        y
+    );
+
+    ctx.lineTo(
+        widthX,
+        y + drawHeight
+    );
+
+    ctx.stroke();
+
+
+    ctx.save();
+
+
+    ctx.translate(
+        widthX - 15,
+        y + drawHeight / 2
+    );
+
+
+    ctx.rotate(
+        -Math.PI / 2
+    );
+
+
+    ctx.fillText(
+        "Width: " +
+        width +
+        " ft",
+        0,
+        0
+    );
+
+
+    ctx.restore();
+
+
+    ctx.fillText(
+        "Top View: " +
+        length +
+        " × " +
+        width +
+        " ft",
+        x,
+        450
+    );
+
+}
+
+
+
+// =====================================
+// SIDE ELEVATION
+// =====================================
+
+function drawSideElevation(
+    width,
+    height
+) {
+
+    const canvas =
+        document.getElementById(
+            "sideDrawing"
+        );
+
+
+    if (!canvas) {
+        return;
+    }
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    canvas.width = 1000;
+    canvas.height = 500;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    // WHITE BACKGROUND
+
+    ctx.fillStyle =
+        "#ffffff";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    // TITLE
+
+    ctx.fillStyle =
+        "#000000";
+
+    ctx.font =
+        "bold 18px Arial";
+
+
+    ctx.fillText(
+        "SIDE ELEVATION",
+        420,
+        35
+    );
+
+
+    // SCALE
+
+    const scale =
+        Math.min(
+            500 / width,
+            300 / height
+        );
+
+
+    const x = 250;
+    const y = 100;
+
+
+    const drawWidth =
+        width * scale;
+
+    const drawHeight =
+        height * scale;
+
+
+    // CONTAINER SIDE
+
+    ctx.strokeStyle =
+        "#000000";
+
+    ctx.lineWidth = 2;
+
+
+    ctx.strokeRect(
+        x,
+        y,
+        drawWidth,
+        drawHeight
+    );
+
+
+    // WIDTH DIMENSION
+
+    const widthY =
+        y +
+        drawHeight +
+        40;
+
+
+    ctx.lineWidth = 1;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x,
+        widthY
+    );
+
+    ctx.lineTo(
+        x + drawWidth,
+        widthY
+    );
+
+    ctx.stroke();
+
+
+    // WIDTH TEXT
+
+    ctx.fillStyle =
+        "#000000";
+
+    ctx.font =
+        "14px Arial";
+
+
+    ctx.fillText(
+        "Width: " +
+        width +
+        " ft",
+        x +
+        drawWidth / 2 -
+        40,
+        widthY + 25
+    );
+
+
+    // HEIGHT DIMENSION
+
+    const heightX =
+        x - 40;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        heightX,
+        y
+    );
+
+    ctx.lineTo(
+        heightX,
+        y + drawHeight
+    );
+
+    ctx.stroke();
+
+
+    // HEIGHT TEXT
+
+    ctx.save();
+
+
+    ctx.translate(
+        heightX - 15,
+        y + drawHeight / 2
+    );
+
+
+    ctx.rotate(
+        -Math.PI / 2
+    );
+
+
+    ctx.fillText(
+        "Height: " +
+        height +
+        " ft",
+        0,
+        0
+    );
+
+
+    ctx.restore();
+
+
     // SIDE INFORMATION
+
     ctx.fillText(
         "Side View: " +
         width +
@@ -101,7 +1478,9 @@
         x,
         450
     );
+
 }
+
 
 
 // =====================================
@@ -109,8 +1488,12 @@
 // =====================================
 
 window.onload = function() {
+
     generateDrawing();
-    showDashboard();
+
 };
 
 </script>
+
+</body>
+</html>
