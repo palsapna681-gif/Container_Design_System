@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#101828">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Container Design">
+<link rel="manifest" href="/static/manifest.json">
 <title>Container Design System</title>
 
 <style>
@@ -595,12 +601,154 @@ textarea{
     .workspace{min-height:800px;}
     .main{flex-direction:column;}
 }
+
+/* ======================================================
+   MOBILE APP / PWA UI
+====================================================== */
+.header{
+    padding:0 max(14px, env(safe-area-inset-left));
+    padding-right:max(14px, env(safe-area-inset-right));
+    justify-content:space-between;
+}
+.header-brand{white-space:nowrap;}
+.header-mobile-actions{display:none;gap:6px;}
+.header-mobile-actions button{
+    height:34px;
+    padding:0 10px;
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:8px;
+    background:rgba(255,255,255,.08);
+    color:#fff;
+    font-size:12px;
+    font-weight:600;
+}
+.mobile-bottom-nav{display:none;}
+
+@media (max-width:700px){
+    body{
+        background:#f2f4f7;
+        overflow-x:hidden;
+    }
+    .header{
+        height:54px;
+        font-size:16px;
+        position:sticky;
+        top:0;
+        z-index:1000;
+    }
+    .header-mobile-actions{display:flex;}
+    .main{
+        height:calc(100vh - 54px);
+        min-height:0;
+        display:block;
+        position:relative;
+    }
+    .left-panel{
+        width:100%;
+        height:calc(100vh - 54px);
+        max-height:none;
+        padding:14px;
+        padding-bottom:110px;
+        position:absolute;
+        inset:0 auto 0 0;
+        z-index:900;
+        transform:translateX(-105%);
+        transition:transform .22s ease;
+        box-shadow:8px 0 24px rgba(16,24,40,.15);
+        overflow-y:auto;
+    }
+    .left-panel.mobile-open{transform:translateX(0);}
+    .workspace{
+        width:100%;
+        min-height:0;
+        height:calc(100vh - 54px);
+    }
+    .toolbar{
+        height:48px;
+        flex:0 0 48px;
+        padding:0 8px;
+        gap:5px;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+    .toolbar button{
+        min-height:34px;
+        padding:6px 9px;
+        flex:0 0 auto;
+    }
+    .zoom-text{margin-left:auto;flex:0 0 auto;}
+    .canvas-area{
+        padding:12px 10px 92px;
+        -webkit-overflow-scrolling:touch;
+    }
+    .canvas-box{
+        padding:12px;
+        margin:0 auto 14px;
+    }
+    #planCanvas{max-width:none;}
+    .report-section{
+        width:100%;
+        padding:14px;
+        border-radius:10px;
+        margin-bottom:14px;
+    }
+    .report-title{font-size:16px;}
+    .bom-table{min-width:720px;}
+    .signature-area{gap:14px;}
+    .signature-box{flex-basis:100%;}
+    .signature-meta{min-width:0;flex-basis:100%;}
+    #signatureCanvas{height:170px;}
+    .mobile-bottom-nav{
+        position:fixed;
+        left:0;
+        right:0;
+        bottom:0;
+        z-index:1200;
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:5px;
+        padding:7px 8px calc(7px + env(safe-area-inset-bottom));
+        background:rgba(255,255,255,.97);
+        border-top:1px solid #d0d5dd;
+        box-shadow:0 -5px 18px rgba(16,24,40,.10);
+        backdrop-filter:blur(10px);
+    }
+    .mobile-bottom-nav button{
+        min-height:44px;
+        border:1px solid #d0d5dd;
+        border-radius:9px;
+        background:#fff;
+        color:#344054;
+        font-size:11px;
+        font-weight:700;
+    }
+    .mobile-bottom-nav button:active{transform:scale(.98);}
+    .mobile-save{background:#155eef!important;color:#fff!important;border-color:#155eef!important;}
+    .mobile-export{background:#12b76a!important;color:#fff!important;border-color:#12b76a!important;}
+    .projects-dialog{
+        width:calc(100% - 20px);
+        max-height:82vh;
+        border-radius:14px;
+    }
+    .project-card{padding:13px;}
+}
+
+@media (min-width:701px){
+    .mobile-bottom-nav{display:none!important;}
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="header">Container Design System</div>
+<div class="header">
+    <div class="header-brand">Container Design System</div>
+    <div class="header-mobile-actions">
+        <button type="button" onclick="toggleMobileControls()">☰ Controls</button>
+        <button type="button" onclick="openProjects()">📁 Projects</button>
+    </div>
+</div>
 
 <div class="main">
 
@@ -851,6 +999,14 @@ Select an object and drag it anywhere inside the container.
         </div>
         <div id="projectList" class="project-list"></div>
     </div>
+</div>
+
+<!-- Mobile app navigation -->
+<div class="mobile-bottom-nav">
+    <button type="button" onclick="toggleMobileControls()">☰<br>Controls</button>
+    <button type="button" onclick="openProjects()">📁<br>Projects</button>
+    <button type="button" class="mobile-save" onclick="saveProject()">💾<br>Save</button>
+    <button type="button" class="mobile-export" onclick="exportDesign()">📄<br>Export</button>
 </div>
 
 <!-- Hidden export document -->
@@ -2013,6 +2169,7 @@ async function loadProject(id){
         closeProjects();
 
         alert("Project loaded successfully!");
+        if(window.innerWidth<=700){ document.querySelector(".left-panel")?.classList.remove("mobile-open"); }
     }catch(error){
         console.error(error);
         alert("Load failed: " + error.message);
@@ -2074,7 +2231,25 @@ window.addEventListener("resize",function(){
 </script>
 
 <!-- Export library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+/* ======================================================
+   MOBILE APP CONTROLS / PWA
+====================================================== */
+function toggleMobileControls(){
+    const panel=document.querySelector(".left-panel");
+    if(panel){
+        panel.classList.toggle("mobile-open");
+    }
+}
+
+if("serviceWorker" in navigator){
+    window.addEventListener("load",function(){
+        navigator.serviceWorker.register("/static/sw.js").catch(function(error){
+            console.warn("PWA service worker registration failed:",error);
+        });
+    });
+}
+</script>
 
 </body>
 </html>
