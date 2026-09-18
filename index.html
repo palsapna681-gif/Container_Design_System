@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Container Design System</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box;}
 
 body{
     margin:0;
@@ -19,10 +14,6 @@ body{
     background:#eef1f5;
     color:#1d2939;
 }
-
-/* =========================
-   HEADER
-========================= */
 
 .header{
     height:60px;
@@ -35,18 +26,10 @@ body{
     font-weight:700;
 }
 
-/* =========================
-   MAIN
-========================= */
-
 .main{
     display:flex;
     height:calc(100vh - 60px);
 }
-
-/* =========================
-   LEFT PANEL
-========================= */
 
 .left-panel{
     width:330px;
@@ -65,9 +48,7 @@ body{
     text-transform:uppercase;
 }
 
-.field{
-    margin-bottom:10px;
-}
+.field{margin-bottom:10px;}
 
 .field label{
     display:block;
@@ -76,8 +57,7 @@ body{
     margin-bottom:5px;
 }
 
-input,
-select{
+input,select{
     width:100%;
     height:34px;
     border:1px solid #d0d5dd;
@@ -87,9 +67,16 @@ select{
     font-size:13px;
 }
 
-/* =========================
-   ITEM ROW
-========================= */
+textarea{
+    width:100%;
+    min-height:60px;
+    border:1px solid #d0d5dd;
+    border-radius:5px;
+    padding:7px 8px;
+    font-size:13px;
+    resize:vertical;
+    font-family:Arial,Helvetica,sans-serif;
+}
 
 .item-row{
     display:grid;
@@ -104,19 +91,8 @@ select{
     font-weight:500;
 }
 
-.yesno{
-    height:30px;
-    font-size:11px;
-}
-
-.qty{
-    height:30px;
-    text-align:center;
-}
-
-/* =========================
-   BUTTON
-========================= */
+.yesno{height:30px;font-size:11px;}
+.qty{height:30px;text-align:center;}
 
 .create-btn{
     width:100%;
@@ -130,9 +106,7 @@ select{
     cursor:pointer;
 }
 
-.create-btn:hover{
-    background:#004eea;
-}
+.create-btn:hover{background:#004eea;}
 
 .clear-btn{
     width:100%;
@@ -145,19 +119,31 @@ select{
     cursor:pointer;
 }
 
-/* =========================
-   CENTER WORKSPACE
-========================= */
+.export-btn{
+    width:100%;
+    margin-top:7px;
+    height:38px;
+    background:#12b76a;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.export-btn:hover{background:#039855;}
 
 .workspace{
     flex:1;
     display:flex;
     flex-direction:column;
     min-width:0;
+    overflow:hidden;
 }
 
 .toolbar{
     height:50px;
+    flex:0 0 50px;
     background:white;
     border-bottom:1px solid #d0d5dd;
     display:flex;
@@ -196,16 +182,142 @@ select{
     background:white;
     padding:25px;
     box-shadow:0 4px 18px rgba(0,0,0,.12);
+    margin-bottom:25px;
 }
 
-#planCanvas{
+#planCanvas{display:block;background:white;}
+
+.report-section{
+    width:min(1100px,100%);
+    background:white;
+    border:1px solid #d0d5dd;
+    border-radius:8px;
+    padding:20px;
+    margin-bottom:25px;
+}
+
+.report-title{
+    font-size:18px;
+    font-weight:700;
+    color:#101828;
+    margin-bottom:14px;
+}
+
+.report-subtitle{
+    font-size:13px;
+    color:#667085;
+    margin-bottom:14px;
+}
+
+.bom-table-wrap{
+    overflow-x:auto;
+}
+
+.bom-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:760px;
+}
+
+.bom-table th{
+    background:#f2f4f7;
+    font-size:12px;
+    text-align:left;
+    padding:9px;
+    border:1px solid #d0d5dd;
+}
+
+.bom-table td{
+    padding:6px;
+    border:1px solid #d0d5dd;
+}
+
+.bom-table input{
+    height:32px;
+    border:none;
+    outline:none;
+    min-width:90px;
+}
+
+.bom-delete{
+    background:#fee4e2;
+    color:#b42318;
+    border:1px solid #fecdca;
+    border-radius:4px;
+    height:30px;
+    padding:0 9px;
+    cursor:pointer;
+}
+
+.small-btn{
+    background:#f2f4f7;
+    color:#344054;
+    border:1px solid #d0d5dd;
+    border-radius:5px;
+    padding:8px 12px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:600;
+}
+
+.add-bom-btn{
+    margin-top:12px;
+    background:#155eef;
+    color:white;
+    border:none;
+    border-radius:5px;
+    padding:9px 13px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:700;
+}
+
+.signature-area{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+}
+
+.signature-box{
+    flex:1 1 500px;
+}
+
+.signature-canvas-wrap{
+    border:1px solid #98a2b3;
+    border-radius:6px;
+    background:#fff;
+    overflow:hidden;
+}
+
+#signatureCanvas{
     display:block;
+    width:100%;
+    height:190px;
+    touch-action:none;
+    cursor:crosshair;
     background:white;
 }
 
-/* =========================
-   RIGHT PANEL
-========================= */
+.signature-actions{
+    margin-top:8px;
+    display:flex;
+    gap:8px;
+}
+
+.signature-meta{
+    flex:1 1 280px;
+    min-width:250px;
+}
+
+.export-note{
+    margin-top:10px;
+    padding:9px;
+    background:#f8f9fc;
+    border:1px solid #eaecf0;
+    border-radius:5px;
+    font-size:11px;
+    color:#667085;
+}
 
 .right-panel{
     width:260px;
@@ -227,9 +339,7 @@ select{
     line-height:1.6;
 }
 
-.property-box{
-    display:none;
-}
+.property-box{display:none;}
 
 .property-box label{
     display:block;
@@ -260,2144 +370,1262 @@ select{
     color:#667085;
 }
 
+/* Export-only document */
+#exportDocument{
+    position:absolute;
+    left:-100000px;
+    top:0;
+    width:1000px;
+    background:white;
+    padding:35px;
+    color:#1d2939;
+}
+
+.export-header{
+    border-bottom:2px solid #101828;
+    padding-bottom:12px;
+    margin-bottom:18px;
+}
+
+.export-header h1{
+    margin:0 0 5px;
+    font-size:24px;
+}
+
+.export-header p{
+    margin:0;
+    color:#667085;
+    font-size:12px;
+}
+
+.export-details{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 20px;
+    margin-bottom:20px;
+}
+
+.export-detail{
+    border-bottom:1px solid #eaecf0;
+    padding:7px 0;
+    font-size:13px;
+}
+
+.export-detail strong{display:inline-block;min-width:130px;}
+
+.export-plan-wrap{
+    border:1px solid #d0d5dd;
+    padding:15px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+#exportPlanImage{
+    max-width:100%;
+    height:auto;
+}
+
+.export-bom-title{
+    font-size:17px;
+    font-weight:700;
+    margin:15px 0 8px;
+}
+
+.export-bom{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.export-bom th,.export-bom td{
+    border:1px solid #d0d5dd;
+    padding:7px;
+    font-size:11px;
+    text-align:left;
+}
+
+.export-bom th{background:#f2f4f7;}
+
+.export-signature{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+}
+
+.export-sign-box{
+    border:1px solid #d0d5dd;
+    padding:12px;
+    min-height:170px;
+}
+
+#exportSignatureImage{
+    width:100%;
+    height:115px;
+    object-fit:contain;
+    background:white;
+}
+
+@media(max-width:1000px){
+    .right-panel{display:none;}
+    .left-panel{width:300px;}
+}
+
+@media(max-width:700px){
+    .main{height:auto;min-height:calc(100vh - 60px);}
+    .left-panel{width:100%;max-height:none;}
+    .workspace{min-height:800px;}
+    .main{flex-direction:column;}
+}
+
+/* ================= DASHBOARD ================= */
+.dashboard-page{min-height:100vh;background:#fff;color:#101828;padding-bottom:30px}
+.dashboard-top{height:72px;border-bottom:1px solid #eaecf0;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#fff;position:sticky;top:0;z-index:20}
+.dashboard-brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:19px}
+.dashboard-logo{width:42px;height:42px;border:1px solid #d0d5dd;border-radius:10px;object-fit:contain;background:#fff;padding:5px}
+.dashboard-user{width:40px;height:40px;border-radius:50%;background:#eef4ff;color:#155eef;display:flex;align-items:center;justify-content:center;font-weight:700}
+.dashboard-content{max-width:1180px;margin:0 auto;padding:30px 24px}
+.dashboard-welcome{margin-bottom:24px}.dashboard-welcome h1{margin:0 0 6px;font-size:28px}.dashboard-welcome p{margin:0;color:#667085;font-size:14px}
+.dashboard-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.dashboard-card{min-height:145px;background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:20px;cursor:pointer;text-align:left;box-shadow:0 2px 8px rgba(16,24,40,.04);transition:.15s;display:flex;flex-direction:column;justify-content:space-between}
+.dashboard-card:hover{border-color:#b2ccff;box-shadow:0 6px 18px rgba(16,24,40,.08);transform:translateY(-1px)}
+.dashboard-icon{width:46px;height:46px;border-radius:11px;background:#eef4ff;color:#155eef;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:700}
+.dashboard-card h3{margin:16px 0 4px;font-size:15px}.dashboard-card p{margin:0;color:#667085;font-size:12px}
+.dashboard-note{display:none;margin-top:18px;padding:14px;border:1px solid #d0d5dd;border-radius:10px;background:#f9fafb;color:#475467;font-size:13px}
+@media(max-width:900px){.dashboard-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:650px){.dashboard-top{height:64px;padding:0 15px}.dashboard-brand{font-size:16px}.dashboard-logo{width:36px;height:36px}.dashboard-content{padding:22px 14px}.dashboard-welcome h1{font-size:23px}.dashboard-grid{grid-template-columns:repeat(2,1fr);gap:11px}.dashboard-card{min-height:128px;padding:15px;border-radius:12px}.dashboard-icon{width:40px;height:40px;font-size:20px}.dashboard-card h3{font-size:14px;margin-top:12px}.dashboard-card p{font-size:11px}}
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- ======================================================
-     HEADER
-====================================================== -->
-
-<div class="header">
-
-    Container Design System
-
+<div id="dashboardView" class="dashboard-page">
+  <div class="dashboard-top">
+    <div class="dashboard-brand"><img class="dashboard-logo" src="/static/icon-192.svg" alt="TM"><span>Container Design System</span></div>
+    <div class="dashboard-user">TM</div>
+  </div>
+  <div class="dashboard-content">
+    <div class="dashboard-welcome"><h1>Dashboard</h1><p>Manage your container design projects and business work.</p></div>
+    <div class="dashboard-grid">
+      <button class="dashboard-card" onclick="openDesignApp()"><span class="dashboard-icon">⌂</span><span><h3>Container Design</h3><p>Create floor plans & designs</p></span></button>
+      <button class="dashboard-card" onclick="showDashboardMessage('Customers module')"><span class="dashboard-icon">♙</span><span><h3>Customers</h3><p>Customer records</p></span></button>
+      <button class="dashboard-card" onclick="showDashboardMessage('Projects module')"><span class="dashboard-icon">▣</span><span><h3>Projects</h3><p>All saved projects</p></span></button>
+      <button class="dashboard-card" onclick="showDashboardMessage('Quotations module')"><span class="dashboard-icon">₹</span><span><h3>Quotations</h3><p>Prepare quotations</p></span></button>
+      <button class="dashboard-card" onclick="showDashboardMessage('BOM module')"><span class="dashboard-icon">☷</span><span><h3>BOM</h3><p>Bill of materials</p></span></button>
+      <button class="dashboard-card" onclick="showDashboardMessage('Payments module')"><span class="dashboard-icon">₹</span><span><h3>Payments</h3><p>Payment tracking</p></span></button>
+      <button class="dashboard-card" onclick="showDashboardMessage('Expenses module')"><span class="dashboard-icon">↗</span><span><h3>Expenses</h3><p>Expense tracking</p></span></button>
+      <button class="dashboard-card" onclick="showDashboardMessage('Employees module')"><span class="dashboard-icon">♟</span><span><h3>Employees</h3><p>Team records</p></span></button>
+      <button class="dashboard-card" onclick="showDashboardMessage('Calendar module')"><span class="dashboard-icon">□</span><span><h3>Calendar</h3><p>Schedule & dates</p></span></button>
+      <button class="dashboard-card" onclick="showDashboardMessage('To-do module')"><span class="dashboard-icon">✓</span><span><h3>To-do</h3><p>Tasks & follow-ups</p></span></button>
+      <button class="dashboard-card" onclick="showDashboardMessage('Documents module')"><span class="dashboard-icon">▤</span><span><h3>Documents</h3><p>Project documents</p></span></button>
+      <button class="dashboard-card" onclick="showDashboardMessage('More modules')"><span class="dashboard-icon">•••</span><span><h3>More</h3><p>More tools</p></span></button>
+    </div>
+    <div id="dashboardNote" class="dashboard-note"></div>
+  </div>
 </div>
 
 
-<div class="main">
+<div class="header">Container Design System</div>
 
-
-<!-- ======================================================
-     LEFT PANEL
-====================================================== -->
+<div id="editorView" class="main" style="display:none;">
 
 <div class="left-panel">
 
+<!-- CUSTOMER DETAILS -->
+<div class="section-title">Customer Details</div>
+
+<div class="field">
+<label>Customer Name</label>
+<input type="text" id="customerName" placeholder="Enter customer name">
+</div>
+
+<div class="field">
+<label>Project / Design Name</label>
+<input type="text" id="projectName" placeholder="Enter project name">
+</div>
+
+<div class="field">
+<label>Contact / Email</label>
+<input type="text" id="customerContact" placeholder="Phone or email">
+</div>
+
+<div class="field">
+<label>Project Date</label>
+<input type="date" id="projectDate">
+</div>
+
+<div class="field">
+<label>Prepared By</label>
+<input type="text" id="preparedBy" placeholder="Your name / company">
+</div>
 
 <!-- PROJECT -->
-
-<div class="section-title">
-    Project Type
-</div>
-
+<div class="section-title">Project Type</div>
 
 <div class="field">
-
-<label>
-    What are you designing?
-</label>
-
+<label>What are you designing?</label>
 <select id="projectType">
-
-<option value="office">
-    Office
-</option>
-
-<option value="house">
-    House
-</option>
-
-<option value="cafe">
-    Café
-</option>
-
-<option value="toilet">
-    Toilet / Washroom
-</option>
-
-<option value="custom">
-    Custom Structure
-</option>
-
+<option value="office">Office</option>
+<option value="house">House</option>
+<option value="cafe">Café</option>
+<option value="toilet">Toilet / Washroom</option>
+<option value="custom">Custom Structure</option>
 </select>
-
 </div>
-
 
 <!-- CONTAINER -->
-
-<div class="section-title">
-    Container / Structure Size
-</div>
-
+<div class="section-title">Container / Structure Size</div>
 
 <div class="field">
-
-<label>
-    Length (ft)
-</label>
-
-<input
-    type="number"
-    id="length"
-    value="20"
-    step="0.1"
->
-
+<label>Length (ft)</label>
+<input type="number" id="length" value="20" step="0.1">
 </div>
-
 
 <div class="field">
-
-<label>
-    Width (ft)
-</label>
-
-<input
-    type="number"
-    id="width"
-    value="8"
-    step="0.1"
->
-
+<label>Width (ft)</label>
+<input type="number" id="width" value="8" step="0.1">
 </div>
-
 
 <div class="field">
-
-<label>
-    Height (ft)
-</label>
-
-<input
-    type="number"
-    id="height"
-    value="8.5"
-    step="0.1"
->
-
+<label>Height (ft)</label>
+<input type="number" id="height" value="8.5" step="0.1">
 </div>
-
 
 <div class="field">
-
-<label>
-    Wall Thickness (mm)
-</label>
-
-<input
-    type="number"
-    id="wall"
-    value="100"
->
-
+<label>Wall Thickness (mm)</label>
+<input type="number" id="wall" value="100">
 </div>
 
-
-<!-- ======================================================
-     ROOMS / STRUCTURE
-====================================================== -->
-
-<div class="section-title">
-    Rooms / Structure
-</div>
-
-
+<div class="section-title">Rooms / Structure</div>
 <div id="rooms"></div>
 
-
-<!-- ======================================================
-     DOORS WINDOWS
-====================================================== -->
-
-<div class="section-title">
-    Doors & Windows
-</div>
-
-
+<div class="section-title">Doors & Windows</div>
 <div id="doors"></div>
 
-
-<!-- ======================================================
-     FURNITURE
-====================================================== -->
-
-<div class="section-title">
-    Furniture
-</div>
-
-
+<div class="section-title">Furniture</div>
 <div id="furniture"></div>
 
-
-<!-- ======================================================
-     ELECTRICAL
-====================================================== -->
-
-<div class="section-title">
-    Electrical
-</div>
-
-
+<div class="section-title">Electrical</div>
 <div id="electrical"></div>
 
-
-<!-- ======================================================
-     PLUMBING
-====================================================== -->
-
-<div class="section-title">
-    Plumbing
-</div>
-
-
+<div class="section-title">Plumbing</div>
 <div id="plumbing"></div>
 
-
-<!-- ======================================================
-     BUTTONS
-====================================================== -->
-
-<button
-    class="create-btn"
-    onclick="createFloorPlan()"
->
-    CREATE FLOOR PLAN
-</button>
-
-
-<button
-    class="clear-btn"
-    onclick="clearPlan()"
->
-    CLEAR DESIGN
-</button>
-
+<button class="create-btn" onclick="createFloorPlan()">CREATE FLOOR PLAN</button>
+<button class="clear-btn" onclick="clearPlan()">CLEAR DESIGN</button>
+<button class="export-btn" onclick="exportDesign()">EXPORT DESIGN / PDF</button>
 
 </div>
-
-
-<!-- ======================================================
-     WORKSPACE
-====================================================== -->
 
 <div class="workspace">
 
-
 <div class="toolbar">
-
-<button onclick="zoomIn()">
-    ＋ Zoom
-</button>
-
-<button onclick="zoomOut()">
-    － Zoom
-</button>
-
-<button onclick="resetZoom()">
-    Reset
-</button>
-
-<span
-    class="zoom-text"
-    id="zoomText"
->
-    100%
-</span>
-
+<button onclick="zoomIn()">＋ Zoom</button>
+<button onclick="zoomOut()">－ Zoom</button>
+<button onclick="resetZoom()">Reset</button>
+<button onclick="updateBOMFromDesign()">Update BOM</button>
+<span class="zoom-text" id="zoomText">100%</span>
 </div>
-
 
 <div class="canvas-area">
 
-
 <div class="canvas-box">
-
-<canvas
-    id="planCanvas"
-    width="1100"
-    height="650"
->
-</canvas>
-
+<canvas id="planCanvas" width="1100" height="650"></canvas>
 </div>
 
+<!-- BOM -->
+<div class="report-section" id="bomSection">
+<div class="report-title">Bill of Materials (BOM)</div>
+<div class="report-subtitle">Design components and material requirements.</div>
 
+<div class="bom-table-wrap">
+<table class="bom-table">
+<thead>
+<tr>
+<th>Item / Component</th>
+<th>Description</th>
+<th>Qty</th>
+<th>Unit</th>
+<th>Material</th>
+<th>Remarks</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="bomBody"></tbody>
+</table>
 </div>
 
-
+<button class="add-bom-btn" onclick="addBOMRow()">+ Add BOM Item</button>
 </div>
 
+<!-- SIGNATURE -->
+<div class="report-section" id="signatureSection">
+<div class="report-title">Customer Approval / Signature</div>
+<div class="report-subtitle">Customer can sign directly below the design.</div>
 
-<!-- ======================================================
-     RIGHT PANEL
-====================================================== -->
+<div class="signature-area">
+<div class="signature-box">
+<label style="font-size:12px;font-weight:600;display:block;margin-bottom:6px;">
+Customer Signature
+</label>
+<div class="signature-canvas-wrap">
+<canvas id="signatureCanvas"></canvas>
+</div>
 
+<div class="signature-actions">
+<button class="small-btn" onclick="clearSignature()">Clear Signature</button>
+</div>
+</div>
+
+<div class="signature-meta">
+<div class="field">
+<label>Customer Name</label>
+<input type="text" id="signatureCustomerName" placeholder="Customer name">
+</div>
+
+<div class="field">
+<label>Signature Date</label>
+<input type="date" id="signatureDate">
+</div>
+
+<div class="export-note">
+The Export button will include customer details, the floor plan, BOM and customer signature in one PDF.
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- RIGHT PANEL -->
 <div class="right-panel">
 
+<div class="right-title">Object Properties</div>
 
-<div class="right-title">
-    Object Properties
-</div>
-
-
-<div
-    class="info"
-    id="emptyInfo"
->
-
+<div class="info" id="emptyInfo">
 Select any object on the floor plan.
-
 <br><br>
-
 You can move the selected object with your mouse.
-
 <br><br>
-
 You can also change:
-
-<br>
-• Width
-<br>
-• Depth
-<br>
-• X Position
-<br>
-• Y Position
-<br>
-• Rotation
-
+<br>• Width
+<br>• Depth
+<br>• X Position
+<br>• Y Position
+<br>• Rotation
 </div>
 
-
-<div
-    class="property-box"
-    id="propertyBox"
->
-
+<div class="property-box" id="propertyBox">
 
 <div class="field">
-
-<label>
-    Object Name
-</label>
-
-<input
-    id="objectName"
-    oninput="updateObject()"
->
-
+<label>Object Name</label>
+<input id="objectName" oninput="updateObject()">
 </div>
 
-
 <div class="field">
-
-<label>
-    Width (ft)
-</label>
-
-<input
-    type="number"
-    id="objectWidth"
-    step="0.1"
-    oninput="updateObject()"
->
-
+<label>Width (ft)</label>
+<input type="number" id="objectWidth" step="0.1" oninput="updateObject()">
 </div>
 
-
 <div class="field">
-
-<label>
-    Depth (ft)
-</label>
-
-<input
-    type="number"
-    id="objectDepth"
-    step="0.1"
-    oninput="updateObject()"
->
-
+<label>Depth (ft)</label>
+<input type="number" id="objectDepth" step="0.1" oninput="updateObject()">
 </div>
 
-
 <div class="field">
-
-<label>
-    X Position (ft)
-</label>
-
-<input
-    type="number"
-    id="objectX"
-    step="0.1"
-    oninput="updateObject()"
->
-
+<label>X Position (ft)</label>
+<input type="number" id="objectX" step="0.1" oninput="updateObject()">
 </div>
 
-
 <div class="field">
-
-<label>
-    Y Position (ft)
-</label>
-
-<input
-    type="number"
-    id="objectY"
-    step="0.1"
-    oninput="updateObject()"
->
-
+<label>Y Position (ft)</label>
+<input type="number" id="objectY" step="0.1" oninput="updateObject()">
 </div>
 
-
 <div class="field">
-
-<label>
-    Rotation
-</label>
-
-<select
-    id="objectRotation"
-    onchange="updateObject()"
->
-
+<label>Rotation</label>
+<select id="objectRotation" onchange="updateObject()">
 <option value="0">0°</option>
-
 <option value="90">90°</option>
-
 <option value="180">180°</option>
-
 <option value="270">270°</option>
-
 </select>
-
 </div>
 
-
-<button
-    class="delete-btn"
-    onclick="deleteObject()"
->
-    DELETE OBJECT
-</button>
-
-
+<button class="delete-btn" onclick="deleteObject()">DELETE OBJECT</button>
 </div>
-
 
 <div class="note">
-
 <strong>Tip:</strong>
-
 Select an object and drag it anywhere inside the container.
-
 </div>
 
-
+</div>
 </div>
 
-
+<!-- Hidden export document -->
+<div id="exportDocument">
+<div class="export-header">
+<h1>Container Design System</h1>
+<p>Design & Bill of Materials</p>
 </div>
 
+<div class="export-details">
+<div class="export-detail"><strong>Customer Name:</strong> <span id="exportCustomerName"></span></div>
+<div class="export-detail"><strong>Project Name:</strong> <span id="exportProjectName"></span></div>
+<div class="export-detail"><strong>Contact / Email:</strong> <span id="exportCustomerContact"></span></div>
+<div class="export-detail"><strong>Project Date:</strong> <span id="exportProjectDate"></span></div>
+<div class="export-detail"><strong>Prepared By:</strong> <span id="exportPreparedBy"></span></div>
+<div class="export-detail"><strong>Project Type:</strong> <span id="exportProjectType"></span></div>
+<div class="export-detail"><strong>Container Size:</strong> <span id="exportContainerSize"></span></div>
+<div class="export-detail"><strong>Wall Thickness:</strong> <span id="exportWall"></span></div>
+</div>
+
+<div class="export-plan-wrap">
+<img id="exportPlanImage" alt="Floor plan">
+</div>
+
+<div class="export-bom-title">Bill of Materials</div>
+<table class="export-bom">
+<thead>
+<tr>
+<th>Item / Component</th>
+<th>Description</th>
+<th>Qty</th>
+<th>Unit</th>
+<th>Material</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody id="exportBomBody"></tbody>
+</table>
+
+<div class="export-signature">
+<div class="export-sign-box">
+<strong>Customer Signature</strong>
+<img id="exportSignatureImage" alt="Customer signature">
+</div>
+<div class="export-sign-box">
+<strong>Customer Approval Details</strong>
+<p><b>Name:</b> <span id="exportSignatureName"></span></p>
+<p><b>Date:</b> <span id="exportSignatureDate"></span></p>
+</div>
+</div>
+</div>
 
 <script>
-
-
 /* ======================================================
    ITEM LISTS
 ====================================================== */
 
-
 const categories = {
-
-    rooms: [
-
-        "Partition",
-        "Room",
-        "Toilet",
-        "Kitchen",
-        "Store",
-        "Reception"
-
-    ],
-
-    doors: [
-
-        "Single Door",
-        "Double Door",
-        "Sliding Door",
-        "Window",
-        "Ventilator"
-
-    ],
-
-    furniture: [
-
-        "Table",
-        "Chair",
-        "Sofa",
-        "Bed",
-        "Cupboard",
-        "Kitchen Platform",
-        "Dining Table",
-        "Counter"
-
-    ],
-
-    electrical: [
-
-        "Fan",
-        "Light",
-        "AC",
-        "Switch",
-        "Socket"
-
-    ],
-
-    plumbing: [
-
-        "WC",
-        "Wash Basin",
-        "Shower",
-        "Sink",
-        "Floor Drain"
-
-    ]
-
+    rooms:["Partition","Room","Toilet","Kitchen","Store","Reception"],
+    doors:["Single Door","Double Door","Sliding Door","Window","Ventilator"],
+    furniture:["Table","Chair","Sofa","Bed","Cupboard","Kitchen Platform","Dining Table","Counter"],
+    electrical:["Fan","Light","AC","Switch","Socket"],
+    plumbing:["WC","Wash Basin","Shower","Sink","Floor Drain"]
 };
-
 
 /* ======================================================
    CREATE YES / NO CONTROLS
 ====================================================== */
 
-
 function createOptions(){
+    for(const category in categories){
+        const container=document.getElementById(category);
 
-    for(
-        const category in categories
-    ){
+        categories[category].forEach((item,index)=>{
+            const id=category+"_"+index;
+            const row=document.createElement("div");
+            row.className="item-row";
 
-        const container =
-            document.getElementById(category);
+            const name=document.createElement("div");
+            name.className="item-name";
+            name.innerText=item;
 
-        categories[category].forEach(
-            (item,index)=>{
+            const select=document.createElement("select");
+            select.className="yesno";
+            select.id=id+"_yesno";
+            select.innerHTML=`<option value="no">No</option><option value="yes">Yes</option>`;
 
-                const id =
-                    category +
-                    "_" +
-                    index;
+            const qty=document.createElement("input");
+            qty.type="number";
+            qty.className="qty";
+            qty.min="1";
+            qty.value="1";
+            qty.disabled=true;
+            qty.id=id+"_qty";
 
-                const row =
-                    document.createElement("div");
+            select.addEventListener("change",function(){
+                qty.disabled=this.value!=="yes";
+            });
 
-                row.className =
-                    "item-row";
-
-
-                const name =
-                    document.createElement("div");
-
-                name.className =
-                    "item-name";
-
-                name.innerText =
-                    item;
-
-
-                const select =
-                    document.createElement("select");
-
-                select.className =
-                    "yesno";
-
-                select.id =
-                    id + "_yesno";
-
-
-                select.innerHTML = `
-
-                    <option value="no">
-                        No
-                    </option>
-
-                    <option value="yes">
-                        Yes
-                    </option>
-
-                `;
-
-
-                const qty =
-                    document.createElement("input");
-
-                qty.type =
-                    "number";
-
-                qty.className =
-                    "qty";
-
-                qty.min =
-                    "1";
-
-                qty.value =
-                    "1";
-
-                qty.disabled =
-                    true;
-
-                qty.id =
-                    id + "_qty";
-
-
-                select.addEventListener(
-                    "change",
-                    function(){
-
-                        qty.disabled =
-                            this.value !== "yes";
-
-                    }
-                );
-
-
-                row.appendChild(name);
-
-                row.appendChild(select);
-
-                row.appendChild(qty);
-
-                container.appendChild(row);
-
-            }
-        );
-
+            row.appendChild(name);
+            row.appendChild(select);
+            row.appendChild(qty);
+            container.appendChild(row);
+        });
     }
-
 }
-
-
 createOptions();
-
 
 /* ======================================================
    CANVAS
 ====================================================== */
 
+const canvas=document.getElementById("planCanvas");
+const ctx=canvas.getContext("2d");
 
-const canvas =
-    document.getElementById("planCanvas");
-
-const ctx =
-    canvas.getContext("2d");
-
-
-/* ======================================================
-   VARIABLES
-====================================================== */
-
-
-let planLength = 20;
-
-let planWidth = 8;
-
-let zoom = 1;
-
-const scale = 32;
-
-let objects = [];
-
-let selectedObject = null;
-
-let dragging = false;
-
-let dragOffsetX = 0;
-
-let dragOffsetY = 0;
-
+let planLength=20;
+let planWidth=8;
+let zoom=1;
+const scale=32;
+let objects=[];
+let selectedObject=null;
+let dragging=false;
+let dragOffsetX=0;
+let dragOffsetY=0;
 
 /* ======================================================
    OBJECT DEFAULTS
 ====================================================== */
 
-
-const defaults = {
-
-    "Partition":
-    [8,0.15],
-
-    "Room":
-    [8,6],
-
-    "Toilet":
-    [4,4],
-
-    "Kitchen":
-    [8,3],
-
-    "Store":
-    [5,4],
-
-    "Reception":
-    [6,2],
-
-    "Single Door":
-    [3,0.2],
-
-    "Double Door":
-    [5,0.2],
-
-    "Sliding Door":
-    [6,0.2],
-
-    "Window":
-    [3,0.2],
-
-    "Ventilator":
-    [2,0.2],
-
-    "Table":
-    [4,2],
-
-    "Chair":
-    [2,2],
-
-    "Sofa":
-    [6,2.5],
-
-    "Bed":
-    [6.5,3],
-
-    "Cupboard":
-    [4,1.5],
-
-    "Kitchen Platform":
-    [6,2],
-
-    "Dining Table":
-    [5,3],
-
-    "Counter":
-    [6,2],
-
-    "Fan":
-    [2,2],
-
-    "Light":
-    [1,1],
-
-    "AC":
-    [4,1],
-
-    "Switch":
-    [0.5,0.5],
-
-    "Socket":
-    [0.5,0.5],
-
-    "WC":
-    [2,3],
-
-    "Wash Basin":
-    [2,1.5],
-
-    "Shower":
-    [3,3],
-
-    "Sink":
-    [2,1.5],
-
-    "Floor Drain":
-    [1,1]
-
+const defaults={
+    "Partition":[8,0.15],"Room":[8,6],"Toilet":[4,4],"Kitchen":[8,3],
+    "Store":[5,4],"Reception":[6,2],"Single Door":[3,0.2],
+    "Double Door":[5,0.2],"Sliding Door":[6,0.2],"Window":[3,0.2],
+    "Ventilator":[2,0.2],"Table":[4,2],"Chair":[2,2],"Sofa":[6,2.5],
+    "Bed":[6.5,3],"Cupboard":[4,1.5],"Kitchen Platform":[6,2],
+    "Dining Table":[5,3],"Counter":[6,2],"Fan":[2,2],"Light":[1,1],
+    "AC":[4,1],"Switch":[0.5,0.5],"Socket":[0.5,0.5],"WC":[2,3],
+    "Wash Basin":[2,1.5],"Shower":[3,3],"Sink":[2,1.5],"Floor Drain":[1,1]
 };
-
 
 /* ======================================================
    PLAN RECT
 ====================================================== */
 
-
 function getPlan(){
-
     return {
-
         x:100,
-
         y:150,
-
-        width:
-            planLength *
-            scale *
-            zoom,
-
-        height:
-            planWidth *
-            scale *
-            zoom
-
+        width:planLength*scale*zoom,
+        height:planWidth*scale*zoom
     };
-
 }
-
 
 /* ======================================================
    CREATE FLOOR PLAN
 ====================================================== */
 
-
 function createFloorPlan(){
+    planLength=parseFloat(document.getElementById("length").value)||20;
+    planWidth=parseFloat(document.getElementById("width").value)||8;
 
-    planLength =
-        parseFloat(
-            document.getElementById("length").value
-        ) || 20;
+    objects=[];
+    selectedObject=null;
 
+    let startX=1;
+    let startY=1;
 
-    planWidth =
-        parseFloat(
-            document.getElementById("width").value
-        ) || 8;
+    for(const category in categories){
+        categories[category].forEach((item,index)=>{
+            const select=document.getElementById(category+"_"+index+"_yesno");
+            const qty=document.getElementById(category+"_"+index+"_qty");
 
+            if(select.value!=="yes") return;
 
-    objects = [];
+            const quantity=parseInt(qty.value)||1;
 
-    selectedObject = null;
+            for(let i=0;i<quantity;i++){
+                const size=defaults[item]||[2,2];
+                let objectX=startX;
+                let objectY=startY;
 
-
-    let startX = 1;
-
-    let startY = 1;
-
-
-    for(
-        const category in categories
-    ){
-
-        categories[category].forEach(
-            (item,index)=>{
-
-                const select =
-                    document.getElementById(
-                        category +
-                        "_" +
-                        index +
-                        "_yesno"
-                    );
-
-                const qty =
-                    document.getElementById(
-                        category +
-                        "_" +
-                        index +
-                        "_qty"
-                    );
-
-
-                if(
-                    select.value !== "yes"
-                ){
-
-                    return;
-
+                if(objectX+size[0]>planLength){
+                    startX=1;
+                    startY+=3;
+                    objectX=startX;
+                    objectY=startY;
                 }
 
-
-                const quantity =
-                    parseInt(qty.value) || 1;
-
-
-                for(
-                    let i=0;
-                    i<quantity;
-                    i++
-                ){
-
-                    const size =
-                        defaults[item] ||
-                        [2,2];
-
-
-                    let objectX =
-                        startX;
-
-                    let objectY =
-                        startY;
-
-
-                    if(
-                        objectX +
-                        size[0] >
-                        planLength
-                    ){
-
-                        startX = 1;
-
-                        startY += 3;
-
-                        objectX = startX;
-
-                        objectY = startY;
-
-                    }
-
-
-                    if(
-                        objectY +
-                        size[1] >
-                        planWidth
-                    ){
-
-                        objectX = 1;
-
-                        objectY = 1;
-
-                    }
-
-
-                    objects.push({
-
-                        id:
-                            Date.now() +
-                            Math.random(),
-
-                        name:item,
-
-                        width:size[0],
-
-                        depth:size[1],
-
-                        x:objectX,
-
-                        y:objectY,
-
-                        rotation:0,
-
-                        type:item
-
-                    });
-
-
-                    startX +=
-                        size[0] + 0.5;
-
+                if(objectY+size[1]>planWidth){
+                    objectX=1;
+                    objectY=1;
                 }
 
+                objects.push({
+                    id:Date.now()+Math.random(),
+                    name:item,
+                    width:size[0],
+                    depth:size[1],
+                    x:objectX,
+                    y:objectY,
+                    rotation:0,
+                    type:item
+                });
+
+                startX+=size[0]+0.5;
             }
-        );
-
+        });
     }
 
-
     resizeCanvas();
-
     drawPlan();
-
     showProperties();
-
+    updateBOMFromDesign();
 }
-
 
 /* ======================================================
    DRAW PLAN
 ====================================================== */
 
-
 function drawPlan(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+    const p=getPlan();
 
+    ctx.textAlign="center";
+    ctx.fillStyle="#9b2945";
+    ctx.font="bold 24px Arial";
 
-    const p =
-        getPlan();
+    const type=document.getElementById("projectType").value;
+    const title=type.toUpperCase();
 
+    ctx.fillText(title,p.x+p.width/2,45);
 
-    /* TITLE */
+    ctx.font="bold 17px Arial";
+    ctx.fillText(planLength+"' X "+planWidth+"'",p.x+p.width/2,75);
 
-    ctx.textAlign =
-        "center";
+    ctx.fillStyle="#ffffff";
+    ctx.fillRect(p.x,p.y,p.width,p.height);
 
-    ctx.fillStyle =
-        "#9b2945";
+    ctx.strokeStyle="#754c3d";
+    ctx.lineWidth=8;
+    ctx.strokeRect(p.x,p.y,p.width,p.height);
 
-    ctx.font =
-        "bold 24px Arial";
-
-
-    const type =
-        document.getElementById(
-            "projectType"
-        ).value;
-
-
-    let title =
-        type.toUpperCase();
-
-
-    ctx.fillText(
-        title,
-        p.x + p.width/2,
-        45
-    );
-
-
-    ctx.font =
-        "bold 17px Arial";
-
-
-    ctx.fillText(
-        planLength +
-        "' X " +
-        planWidth +
-        "'",
-        p.x + p.width/2,
-        75
-    );
-
-
-    /* FLOOR */
-
-    ctx.fillStyle =
-        "#ffffff";
-
-    ctx.fillRect(
-        p.x,
-        p.y,
-        p.width,
-        p.height
-    );
-
-
-    /* WALL */
-
-    ctx.strokeStyle =
-        "#754c3d";
-
-    ctx.lineWidth =
-        8;
-
-    ctx.strokeRect(
-        p.x,
-        p.y,
-        p.width,
-        p.height
-    );
-
-
-    /* INNER BORDER */
-
-    ctx.strokeStyle =
-        "#c7a99b";
-
-    ctx.lineWidth =
-        1;
-
-    ctx.strokeRect(
-        p.x + 4,
-        p.y + 4,
-        p.width - 8,
-        p.height - 8
-    );
-
-
-    /* DIMENSIONS */
+    ctx.strokeStyle="#c7a99b";
+    ctx.lineWidth=1;
+    ctx.strokeRect(p.x+4,p.y+4,p.width-8,p.height-8);
 
     drawDimensions(p);
-
-
-    /* OBJECTS */
-
-    objects.forEach(
-        obj => drawObject(obj)
-    );
-
+    objects.forEach(obj=>drawObject(obj));
 }
-
 
 /* ======================================================
    DIMENSIONS
 ====================================================== */
 
-
 function drawDimensions(p){
+    ctx.strokeStyle="#777";
+    ctx.fillStyle="#555";
+    ctx.lineWidth=1;
+    ctx.font="12px Arial";
 
-    ctx.strokeStyle =
-        "#777";
-
-    ctx.fillStyle =
-        "#555";
-
-    ctx.lineWidth =
-        1;
-
-    ctx.font =
-        "12px Arial";
-
-
-    /* LENGTH */
-
-    const y =
-        p.y - 30;
-
-
+    const y=p.y-30;
     ctx.beginPath();
-
-    ctx.moveTo(
-        p.x,
-        y
-    );
-
-    ctx.lineTo(
-        p.x + p.width,
-        y
-    );
-
+    ctx.moveTo(p.x,y);
+    ctx.lineTo(p.x+p.width,y);
     ctx.stroke();
 
+    ctx.textAlign="center";
+    ctx.fillText(planLength+" ft",p.x+p.width/2,y-5);
 
-    ctx.textAlign =
-        "center";
-
-
-    ctx.fillText(
-        planLength + " ft",
-        p.x + p.width/2,
-        y - 5
-    );
-
-
-    /* WIDTH */
-
-    const x =
-        p.x - 30;
-
-
+    const x=p.x-30;
     ctx.beginPath();
-
-    ctx.moveTo(
-        x,
-        p.y
-    );
-
-    ctx.lineTo(
-        x,
-        p.y + p.height
-    );
-
+    ctx.moveTo(x,p.y);
+    ctx.lineTo(x,p.y+p.height);
     ctx.stroke();
-
 
     ctx.save();
-
-    ctx.translate(
-        x - 8,
-        p.y + p.height/2
-    );
-
-    ctx.rotate(
-        -Math.PI/2
-    );
-
-
-    ctx.fillText(
-        planWidth + " ft",
-        0,
-        0
-    );
-
-
+    ctx.translate(x-8,p.y+p.height/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText(planWidth+" ft",0,0);
     ctx.restore();
-
 }
-
 
 /* ======================================================
    DRAW OBJECT
 ====================================================== */
 
-
 function drawObject(obj){
+    const p=getPlan();
 
-    const p =
-        getPlan();
-
-
-    const x =
-        p.x +
-        obj.x *
-        scale *
-        zoom;
-
-
-    const y =
-        p.y +
-        obj.y *
-        scale *
-        zoom;
-
-
-    const w =
-        obj.width *
-        scale *
-        zoom;
-
-
-    const h =
-        obj.depth *
-        scale *
-        zoom;
-
+    const x=p.x+obj.x*scale*zoom;
+    const y=p.y+obj.y*scale*zoom;
+    const w=obj.width*scale*zoom;
+    const h=obj.depth*scale*zoom;
 
     ctx.save();
+    ctx.translate(x+w/2,y+h/2);
+    ctx.rotate(obj.rotation*Math.PI/180);
 
-
-    ctx.translate(
-        x + w/2,
-        y + h/2
-    );
-
-
-    ctx.rotate(
-        obj.rotation *
-        Math.PI /
-        180
-    );
-
-
-    /* SELECTION */
-
-    if(
-        obj === selectedObject
-    ){
-
-        ctx.strokeStyle =
-            "#155eef";
-
-        ctx.lineWidth =
-            2;
-
-        ctx.setLineDash(
-            [5,4]
-        );
-
-        ctx.strokeRect(
-            -w/2 - 5,
-            -h/2 - 5,
-            w + 10,
-            h + 10
-        );
-
+    if(obj===selectedObject){
+        ctx.strokeStyle="#155eef";
+        ctx.lineWidth=2;
+        ctx.setLineDash([5,4]);
+        ctx.strokeRect(-w/2-5,-h/2-5,w+10,h+10);
         ctx.setLineDash([]);
-
     }
 
-
-    /* =====================
-       PARTITION
-    ===================== */
-
-    if(
-        obj.type === "Partition"
-    ){
-
-        ctx.strokeStyle =
-            "#60483e";
-
-        ctx.lineWidth =
-            5;
-
+    if(obj.type==="Partition"){
+        ctx.strokeStyle="#60483e";
+        ctx.lineWidth=5;
         ctx.beginPath();
-
-        ctx.moveTo(
-            -w/2,
-            0
-        );
-
-        ctx.lineTo(
-            w/2,
-            0
-        );
-
+        ctx.moveTo(-w/2,0);
+        ctx.lineTo(w/2,0);
         ctx.stroke();
-
         ctx.restore();
-
         return;
-
     }
 
-
-    /* =====================
-       DOOR
-    ===================== */
-
-    if(
-        obj.type.includes("Door")
-    ){
-
-        ctx.strokeStyle =
-            "#9b2945";
-
-        ctx.lineWidth =
-            2;
-
+    if(obj.type.includes("Door")){
+        ctx.strokeStyle="#9b2945";
+        ctx.lineWidth=2;
         ctx.beginPath();
-
-        ctx.moveTo(
-            -w/2,
-            0
-        );
-
-        ctx.lineTo(
-            w/2,
-            0
-        );
-
+        ctx.moveTo(-w/2,0);
+        ctx.lineTo(w/2,0);
         ctx.stroke();
 
-
         ctx.beginPath();
-
-        ctx.arc(
-            -w/2,
-            0,
-            w,
-            0,
-            Math.PI/2
-        );
-
+        ctx.arc(-w/2,0,w,0,Math.PI/2);
         ctx.stroke();
-
         ctx.restore();
-
         return;
-
     }
 
-
-    /* =====================
-       WINDOW
-    ===================== */
-
-    if(
-        obj.type === "Window" ||
-        obj.type === "Ventilator"
-    ){
-
-        ctx.fillStyle =
-            "#e8f5ff";
-
-        ctx.strokeStyle =
-            "#3182ce";
-
-        ctx.lineWidth =
-            4;
-
-        ctx.fillRect(
-            -w/2,
-            -h/2,
-            w,
-            h
-        );
-
-        ctx.strokeRect(
-            -w/2,
-            -h/2,
-            w,
-            h
-        );
-
+    if(obj.type==="Window"||obj.type==="Ventilator"){
+        ctx.fillStyle="#e8f5ff";
+        ctx.strokeStyle="#3182ce";
+        ctx.lineWidth=4;
+        ctx.fillRect(-w/2,-h/2,w,h);
+        ctx.strokeRect(-w/2,-h/2,w,h);
         ctx.restore();
-
         return;
-
     }
 
-
-    /* =====================
-       FAN
-    ===================== */
-
-    if(
-        obj.type === "Fan"
-    ){
-
-        ctx.strokeStyle =
-            "#555";
-
-        ctx.lineWidth =
-            1.5;
-
-        const r =
-            Math.min(w,h)/2;
-
+    if(obj.type==="Fan"){
+        ctx.strokeStyle="#555";
+        ctx.lineWidth=1.5;
+        const r=Math.min(w,h)/2;
 
         ctx.beginPath();
-
-        ctx.arc(
-            0,
-            0,
-            r,
-            0,
-            Math.PI*2
-        );
-
+        ctx.arc(0,0,r,0,Math.PI*2);
         ctx.stroke();
 
-
-        for(
-            let i=0;
-            i<4;
-            i++
-        ){
-
+        for(let i=0;i<4;i++){
             ctx.save();
-
-            ctx.rotate(
-                i *
-                Math.PI/2
-            );
-
+            ctx.rotate(i*Math.PI/2);
             ctx.beginPath();
-
-            ctx.ellipse(
-                r*.4,
-                0,
-                r*.4,
-                r*.13,
-                0,
-                0,
-                Math.PI*2
-            );
-
+            ctx.ellipse(r*.4,0,r*.4,r*.13,0,0,Math.PI*2);
             ctx.stroke();
-
             ctx.restore();
-
         }
 
-
         ctx.restore();
-
         return;
-
     }
 
+    if(obj.type==="Light"){
+        ctx.strokeStyle="#d49a00";
+        ctx.lineWidth=2;
+        ctx.beginPath();
+        ctx.arc(0,0,Math.min(w,h)/2,0,Math.PI*2);
+        ctx.stroke();
+        ctx.restore();
+        return;
+    }
 
-    /* =====================
-       LIGHT
-    ===================== */
-
-    if(
-        obj.type === "Light"
-    ){
-
-        ctx.strokeStyle =
-            "#d49a00";
-
-        ctx.lineWidth =
-            2;
+    if(obj.type==="WC"){
+        ctx.strokeStyle="#555";
+        ctx.lineWidth=1.5;
+        ctx.strokeRect(-w/2,-h/2,w,h);
 
         ctx.beginPath();
-
-        ctx.arc(
-            0,
-            0,
-            Math.min(w,h)/2,
-            0,
-            Math.PI*2
-        );
-
+        ctx.ellipse(0,0,w*.28,h*.30,0,0,Math.PI*2);
         ctx.stroke();
-
-
         ctx.restore();
-
         return;
-
     }
 
+    ctx.fillStyle="#f5f5f5";
+    ctx.strokeStyle="#777";
+    ctx.lineWidth=1.5;
 
-    /* =====================
-       WC
-    ===================== */
+    ctx.fillRect(-w/2,-h/2,w,h);
+    ctx.strokeRect(-w/2,-h/2,w,h);
 
-    if(
-        obj.type === "WC"
-    ){
-
-        ctx.strokeStyle =
-            "#555";
-
-        ctx.lineWidth =
-            1.5;
-
-        ctx.strokeRect(
-            -w/2,
-            -h/2,
-            w,
-            h
-        );
-
-
-        ctx.beginPath();
-
-        ctx.ellipse(
-            0,
-            0,
-            w*.28,
-            h*.30,
-            0,
-            0,
-            Math.PI*2
-        );
-
-        ctx.stroke();
-
-
-        ctx.restore();
-
-        return;
-
-    }
-
-
-    /* =====================
-       GENERAL FURNITURE
-    ===================== */
-
-    ctx.fillStyle =
-        "#f5f5f5";
-
-    ctx.strokeStyle =
-        "#777";
-
-    ctx.lineWidth =
-        1.5;
-
-
-    ctx.fillRect(
-        -w/2,
-        -h/2,
-        w,
-        h
-    );
-
-
-    ctx.strokeRect(
-        -w/2,
-        -h/2,
-        w,
-        h
-    );
-
-
-    ctx.fillStyle =
-        "#555";
-
-    ctx.font =
-        "10px Arial";
-
-    ctx.textAlign =
-        "center";
-
-
-    ctx.fillText(
-        obj.name,
-        0,
-        4
-    );
-
+    ctx.fillStyle="#555";
+    ctx.font="10px Arial";
+    ctx.textAlign="center";
+    ctx.fillText(obj.name,0,4);
 
     ctx.restore();
-
 }
-
 
 /* ======================================================
    MOUSE HIT TEST
 ====================================================== */
 
+function hitObject(obj,mouseX,mouseY){
+    const p=getPlan();
+    const x=p.x+obj.x*scale*zoom;
+    const y=p.y+obj.y*scale*zoom;
+    const w=obj.width*scale*zoom;
+    const h=obj.depth*scale*zoom;
 
-function hitObject(
-    obj,
-    mouseX,
-    mouseY
-){
-
-    const p =
-        getPlan();
-
-
-    const x =
-        p.x +
-        obj.x *
-        scale *
-        zoom;
-
-
-    const y =
-        p.y +
-        obj.y *
-        scale *
-        zoom;
-
-
-    const w =
-        obj.width *
-        scale *
-        zoom;
-
-
-    const h =
-        obj.depth *
-        scale *
-        zoom;
-
-
-    return (
-
-        mouseX >= x - 8 &&
-
-        mouseX <= x + w + 8 &&
-
-        mouseY >= y - 8 &&
-
-        mouseY <= y + h + 8
-
-    );
-
+    return mouseX>=x-8&&mouseX<=x+w+8&&mouseY>=y-8&&mouseY<=y+h+8;
 }
-
 
 /* ======================================================
    MOUSE POSITION
 ====================================================== */
 
-
 function mousePosition(event){
-
-    const rect =
-        canvas.getBoundingClientRect();
-
-
-    const mouseX =
-        event.clientX -
-        rect.left;
-
-
-    const mouseY =
-        event.clientY -
-        rect.top;
-
-
-    const p =
-        getPlan();
-
+    const rect=canvas.getBoundingClientRect();
+    const mouseX=event.clientX-rect.left;
+    const mouseY=event.clientY-rect.top;
+    const p=getPlan();
 
     return {
-
         px:mouseX,
-
         py:mouseY,
-
-        x:
-            (mouseX-p.x) /
-            (scale*zoom),
-
-        y:
-            (mouseY-p.y) /
-            (scale*zoom)
-
+        x:(mouseX-p.x)/(scale*zoom),
+        y:(mouseY-p.y)/(scale*zoom)
     };
-
 }
 
+canvas.addEventListener("mousedown",function(event){
+    const m=mousePosition(event);
+    selectedObject=null;
 
-/* ======================================================
-   MOUSE DOWN
-====================================================== */
-
-
-canvas.addEventListener(
-    "mousedown",
-    function(event){
-
-        const m =
-            mousePosition(event);
-
-
-        selectedObject =
-            null;
-
-
-        for(
-            let i=objects.length-1;
-            i>=0;
-            i--
-        ){
-
-            if(
-                hitObject(
-                    objects[i],
-                    m.px,
-                    m.py
-                )
-            ){
-
-                selectedObject =
-                    objects[i];
-
-                dragging =
-                    true;
-
-
-                dragOffsetX =
-                    m.x -
-                    selectedObject.x;
-
-
-                dragOffsetY =
-                    m.y -
-                    selectedObject.y;
-
-
-                break;
-
-            }
-
+    for(let i=objects.length-1;i>=0;i--){
+        if(hitObject(objects[i],m.px,m.py)){
+            selectedObject=objects[i];
+            dragging=true;
+            dragOffsetX=m.x-selectedObject.x;
+            dragOffsetY=m.y-selectedObject.y;
+            break;
         }
-
-
-        showProperties();
-
-        drawPlan();
-
     }
-);
 
+    showProperties();
+    drawPlan();
+});
 
-/* ======================================================
-   MOUSE MOVE
-====================================================== */
+canvas.addEventListener("mousemove",function(event){
+    if(!dragging||!selectedObject)return;
 
+    const m=mousePosition(event);
 
-canvas.addEventListener(
-    "mousemove",
-    function(event){
+    selectedObject.x=m.x-dragOffsetX;
+    selectedObject.y=m.y-dragOffsetY;
 
-        if(
-            !dragging ||
-            !selectedObject
-        ){
+    selectedObject.x=Math.max(0,Math.min(selectedObject.x,planLength-selectedObject.width));
+    selectedObject.y=Math.max(0,Math.min(selectedObject.y,planWidth-selectedObject.depth));
 
-            return;
+    showProperties();
+    drawPlan();
+});
 
-        }
-
-
-        const m =
-            mousePosition(event);
-
-
-        selectedObject.x =
-            m.x -
-            dragOffsetX;
-
-
-        selectedObject.y =
-            m.y -
-            dragOffsetY;
-
-
-        /* Keep inside container */
-
-        selectedObject.x =
-            Math.max(
-                0,
-                Math.min(
-                    selectedObject.x,
-                    planLength -
-                    selectedObject.width
-                )
-            );
-
-
-        selectedObject.y =
-            Math.max(
-                0,
-                Math.min(
-                    selectedObject.y,
-                    planWidth -
-                    selectedObject.depth
-                )
-            );
-
-
-        showProperties();
-
-        drawPlan();
-
-    }
-);
-
-
-/* ======================================================
-   MOUSE UP
-====================================================== */
-
-
-canvas.addEventListener(
-    "mouseup",
-    function(){
-
-        dragging =
-            false;
-
-    }
-);
-
-
-canvas.addEventListener(
-    "mouseleave",
-    function(){
-
-        dragging =
-            false;
-
-    }
-);
-
+canvas.addEventListener("mouseup",function(){dragging=false;});
+canvas.addEventListener("mouseleave",function(){dragging=false;});
 
 /* ======================================================
    PROPERTIES
 ====================================================== */
 
-
 function showProperties(){
+    const empty=document.getElementById("emptyInfo");
+    const box=document.getElementById("propertyBox");
 
-    const empty =
-        document.getElementById(
-            "emptyInfo"
-        );
-
-    const box =
-        document.getElementById(
-            "propertyBox"
-        );
-
-
-    if(
-        !selectedObject
-    ){
-
-        empty.style.display =
-            "block";
-
-        box.style.display =
-            "none";
-
+    if(!selectedObject){
+        empty.style.display="block";
+        box.style.display="none";
         return;
-
     }
 
+    empty.style.display="none";
+    box.style.display="block";
 
-    empty.style.display =
-        "none";
-
-    box.style.display =
-        "block";
-
-
-    document.getElementById(
-        "objectName"
-    ).value =
-        selectedObject.name;
-
-
-    document.getElementById(
-        "objectWidth"
-    ).value =
-        selectedObject.width;
-
-
-    document.getElementById(
-        "objectDepth"
-    ).value =
-        selectedObject.depth;
-
-
-    document.getElementById(
-        "objectX"
-    ).value =
-        selectedObject.x.toFixed(2);
-
-
-    document.getElementById(
-        "objectY"
-    ).value =
-        selectedObject.y.toFixed(2);
-
-
-    document.getElementById(
-        "objectRotation"
-    ).value =
-        selectedObject.rotation;
-
+    document.getElementById("objectName").value=selectedObject.name;
+    document.getElementById("objectWidth").value=selectedObject.width;
+    document.getElementById("objectDepth").value=selectedObject.depth;
+    document.getElementById("objectX").value=selectedObject.x.toFixed(2);
+    document.getElementById("objectY").value=selectedObject.y.toFixed(2);
+    document.getElementById("objectRotation").value=selectedObject.rotation;
 }
-
-
-/* ======================================================
-   UPDATE OBJECT
-====================================================== */
-
 
 function updateObject(){
+    if(!selectedObject)return;
 
-    if(
-        !selectedObject
-    ){
-
-        return;
-
-    }
-
-
-    selectedObject.name =
-        document.getElementById(
-            "objectName"
-        ).value;
-
-
-    selectedObject.width =
-        parseFloat(
-            document.getElementById(
-                "objectWidth"
-            ).value
-        ) || 1;
-
-
-    selectedObject.depth =
-        parseFloat(
-            document.getElementById(
-                "objectDepth"
-            ).value
-        ) || 1;
-
-
-    selectedObject.x =
-        parseFloat(
-            document.getElementById(
-                "objectX"
-            ).value
-        ) || 0;
-
-
-    selectedObject.y =
-        parseFloat(
-            document.getElementById(
-                "objectY"
-            ).value
-        ) || 0;
-
-
-    selectedObject.rotation =
-        parseInt(
-            document.getElementById(
-                "objectRotation"
-            ).value
-        ) || 0;
-
+    selectedObject.name=document.getElementById("objectName").value;
+    selectedObject.width=parseFloat(document.getElementById("objectWidth").value)||1;
+    selectedObject.depth=parseFloat(document.getElementById("objectDepth").value)||1;
+    selectedObject.x=parseFloat(document.getElementById("objectX").value)||0;
+    selectedObject.y=parseFloat(document.getElementById("objectY").value)||0;
+    selectedObject.rotation=parseInt(document.getElementById("objectRotation").value)||0;
 
     drawPlan();
-
+    updateBOMFromDesign();
 }
-
-
-/* ======================================================
-   DELETE OBJECT
-====================================================== */
-
 
 function deleteObject(){
+    if(!selectedObject)return;
 
-    if(
-        !selectedObject
-    ){
-
-        return;
-
-    }
-
-
-    objects =
-        objects.filter(
-            obj =>
-                obj !== selectedObject
-        );
-
-
-    selectedObject =
-        null;
-
+    objects=objects.filter(obj=>obj!==selectedObject);
+    selectedObject=null;
 
     showProperties();
-
     drawPlan();
-
+    updateBOMFromDesign();
 }
-
-
-/* ======================================================
-   CLEAR PLAN
-====================================================== */
-
 
 function clearPlan(){
-
-    objects = [];
-
-    selectedObject =
-        null;
-
+    objects=[];
+    selectedObject=null;
     showProperties();
-
     drawPlan();
-
+    updateBOMFromDesign();
 }
-
 
 /* ======================================================
    ZOOM
 ====================================================== */
 
-
 function zoomIn(){
-
-    zoom += 0.1;
-
-    if(
-        zoom > 2
-    ){
-
-        zoom = 2;
-
-    }
-
+    zoom+=0.1;
+    if(zoom>2)zoom=2;
     resizeCanvas();
-
     drawPlan();
-
     updateZoom();
-
 }
-
 
 function zoomOut(){
-
-    zoom -= 0.1;
-
-    if(
-        zoom < 0.5
-    ){
-
-        zoom = 0.5;
-
-    }
-
+    zoom-=0.1;
+    if(zoom<0.5)zoom=0.5;
     resizeCanvas();
-
     drawPlan();
-
     updateZoom();
-
 }
-
 
 function resetZoom(){
-
-    zoom = 1;
-
+    zoom=1;
     resizeCanvas();
-
     drawPlan();
-
     updateZoom();
-
 }
-
 
 function updateZoom(){
-
-    document.getElementById(
-        "zoomText"
-    ).innerText =
-        Math.round(
-            zoom*100
-        ) + "%";
-
+    document.getElementById("zoomText").innerText=Math.round(zoom*100)+"%";
 }
-
-
-/* ======================================================
-   CANVAS SIZE
-====================================================== */
-
 
 function resizeCanvas(){
+    const p=getPlan();
 
-    const p =
-        getPlan();
-
-
-    canvas.width =
-        Math.max(
-            1100,
-            p.x +
-            p.width +
-            100
-        );
-
-
-    canvas.height =
-        Math.max(
-            650,
-            p.y +
-            p.height +
-            100
-        );
-
+    canvas.width=Math.max(1100,p.x+p.width+100);
+    canvas.height=Math.max(650,p.y+p.height+100);
 }
 
+/* ======================================================
+   BOM
+====================================================== */
+
+function addBOMRow(item="",description="",qty=1,unit="Nos",material="",remarks=""){
+    const tbody=document.getElementById("bomBody");
+    const tr=document.createElement("tr");
+
+    tr.innerHTML=`
+        <td><input type="text" class="bom-item" value="${escapeHtml(item)}" placeholder="Component"></td>
+        <td><input type="text" class="bom-description" value="${escapeHtml(description)}" placeholder="Description"></td>
+        <td><input type="number" class="bom-qty" value="${qty}" min="0" step="1"></td>
+        <td><input type="text" class="bom-unit" value="${escapeHtml(unit)}" placeholder="Nos"></td>
+        <td><input type="text" class="bom-material" value="${escapeHtml(material)}" placeholder="Material"></td>
+        <td><input type="text" class="bom-remarks" value="${escapeHtml(remarks)}" placeholder="Remarks"></td>
+        <td><button class="bom-delete" onclick="this.closest('tr').remove()">Delete</button></td>
+    `;
+
+    tbody.appendChild(tr);
+}
+
+function escapeHtml(value){
+    return String(value??"")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function updateBOMFromDesign(){
+    const tbody=document.getElementById("bomBody");
+    tbody.innerHTML="";
+
+    const counts={};
+
+    objects.forEach(obj=>{
+        const key=obj.name;
+        if(!counts[key]){
+            counts[key]={qty:0,width:obj.width,depth:obj.depth};
+        }
+        counts[key].qty++;
+    });
+
+    Object.keys(counts).forEach(name=>{
+        const item=counts[name];
+        addBOMRow(
+            name,
+            `${item.width} ft x ${item.depth} ft`,
+            item.qty,
+            "Nos",
+            "",
+            "Generated from design"
+        );
+    });
+
+    if(Object.keys(counts).length===0){
+        addBOMRow("","","1","Nos","","");
+    }
+}
+
+/* ======================================================
+   SIGNATURE
+====================================================== */
+
+const signatureCanvas=document.getElementById("signatureCanvas");
+const signatureCtx=signatureCanvas.getContext("2d");
+let signatureDrawing=false;
+
+function resizeSignatureCanvas(){
+    const ratio=window.devicePixelRatio||1;
+    const rect=signatureCanvas.getBoundingClientRect();
+    signatureCanvas.width=Math.max(600,Math.floor(rect.width*ratio));
+    signatureCanvas.height=Math.floor(190*ratio);
+
+    signatureCtx.setTransform(ratio,0,0,ratio,0,0);
+    signatureCtx.lineWidth=2;
+    signatureCtx.lineCap="round";
+    signatureCtx.lineJoin="round";
+    signatureCtx.strokeStyle="#101828";
+}
+
+function signaturePoint(event){
+    const rect=signatureCanvas.getBoundingClientRect();
+    return {
+        x:event.clientX-rect.left,
+        y:event.clientY-rect.top
+    };
+}
+
+signatureCanvas.addEventListener("pointerdown",function(event){
+    signatureDrawing=true;
+    signatureCanvas.setPointerCapture(event.pointerId);
+    const p=signaturePoint(event);
+    signatureCtx.beginPath();
+    signatureCtx.moveTo(p.x,p.y);
+});
+
+signatureCanvas.addEventListener("pointermove",function(event){
+    if(!signatureDrawing)return;
+    const p=signaturePoint(event);
+    signatureCtx.lineTo(p.x,p.y);
+    signatureCtx.stroke();
+});
+
+signatureCanvas.addEventListener("pointerup",function(){signatureDrawing=false;});
+signatureCanvas.addEventListener("pointercancel",function(){signatureDrawing=false;});
+
+function clearSignature(){
+    const rect=signatureCanvas.getBoundingClientRect();
+    signatureCtx.clearRect(0,0,rect.width,rect.height);
+}
+
+function syncCustomerName(){
+    const name=document.getElementById("customerName").value;
+    const signatureName=document.getElementById("signatureCustomerName");
+
+    if(name&&!signatureName.value){
+        signatureName.value=name;
+    }
+}
+
+document.getElementById("customerName").addEventListener("input",function(){
+    document.getElementById("signatureCustomerName").value=this.value;
+});
+
+/* ======================================================
+   EXPORT
+====================================================== */
+
+function getValue(id,fallback=""){
+    const el=document.getElementById(id);
+    return el ? (el.value||fallback) : fallback;
+}
+
+function setExportText(id,value){
+    document.getElementById(id).textContent=value||"—";
+}
+
+function buildExportBOM(){
+    const exportBody=document.getElementById("exportBomBody");
+    exportBody.innerHTML="";
+
+    const rows=document.querySelectorAll("#bomBody tr");
+
+    rows.forEach(row=>{
+        const item=row.querySelector(".bom-item")?.value||"";
+        const description=row.querySelector(".bom-description")?.value||"";
+        const qty=row.querySelector(".bom-qty")?.value||"";
+        const unit=row.querySelector(".bom-unit")?.value||"";
+        const material=row.querySelector(".bom-material")?.value||"";
+        const remarks=row.querySelector(".bom-remarks")?.value||"";
+
+        if(!item&&!description&&!material&&!remarks)return;
+
+        const tr=document.createElement("tr");
+        [item,description,qty,unit,material,remarks].forEach(value=>{
+            const td=document.createElement("td");
+            td.textContent=value;
+            tr.appendChild(td);
+        });
+        exportBody.appendChild(tr);
+    });
+
+    if(!exportBody.children.length){
+        const tr=document.createElement("tr");
+        const td=document.createElement("td");
+        td.colSpan=6;
+        td.textContent="No BOM items";
+        tr.appendChild(td);
+        exportBody.appendChild(tr);
+    }
+}
+
+function prepareExportDocument(){
+    syncCustomerName();
+
+    setExportText("exportCustomerName",getValue("customerName"));
+    setExportText("exportProjectName",getValue("projectName"));
+    setExportText("exportCustomerContact",getValue("customerContact"));
+    setExportText("exportProjectDate",getValue("projectDate"));
+    setExportText("exportPreparedBy",getValue("preparedBy"));
+    setExportText("exportProjectType",getValue("projectType"));
+    setExportText("exportContainerSize",planLength+" ft × "+planWidth+" ft × "+(getValue("height","8.5"))+" ft");
+    setExportText("exportWall",getValue("wall")+" mm");
+
+    document.getElementById("exportPlanImage").src=canvas.toDataURL("image/png");
+    document.getElementById("exportSignatureImage").src=signatureCanvas.toDataURL("image/png");
+
+    setExportText("exportSignatureName",getValue("signatureCustomerName"));
+    setExportText("exportSignatureDate",getValue("signatureDate"));
+
+    buildExportBOM();
+}
+
+async function exportDesign(){
+    prepareExportDocument();
+
+    if(!window.html2canvas){
+        alert("Export library is still loading. Please wait 2 seconds and try again.");
+        return;
+    }
+
+    const element=document.getElementById("exportDocument");
+
+    try{
+        const image=await html2canvas(element,{
+            scale:2,
+            backgroundColor:"#ffffff",
+            useCORS:true
+        });
+
+        const link=document.createElement("a");
+        const customer=(getValue("customerName","Customer")).replace(/[^a-z0-9-_ ]/gi,"").trim()||"Customer";
+        const date=getValue("projectDate","").replace(/-/g,"")||"Design";
+
+        link.download="Container_Design_"+customer+"_"+date+".png";
+        link.href=image.toDataURL("image/png");
+        link.click();
+
+        // Also open print dialog so the same complete document can be saved as PDF.
+        const printWindow=window.open("","_blank");
+
+        if(printWindow){
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                <title>Container Design - ${escapeHtml(customer)}</title>
+                <style>
+                body{margin:0;background:white;font-family:Arial,sans-serif;}
+                img{max-width:100%;}
+                @page{size:A4 portrait;margin:10mm;}
+                </style>
+                </head>
+                <body>${element.outerHTML}
+<script>
+function openDesignApp(){
+  document.getElementById('dashboardView').style.display='none';
+  const editor=document.getElementById('editorView');
+  if(editor) editor.style.display='flex';
+  window.scrollTo(0,0);
+}
+function showDashboard(){
+  const editor=document.getElementById('editorView');
+  if(editor) editor.style.display='none';
+  document.getElementById('dashboardView').style.display='block';
+  window.scrollTo(0,0);
+}
+function showDashboardMessage(name){
+  const n=document.getElementById('dashboardNote');
+  n.textContent=name+' is ready for the next development step. Your existing Container Design editor remains available.';
+  n.style.display='block';
+}
+</script>
+</body>
+                </html>
+            `);
+            printWindow.document.close();
+
+            setTimeout(()=>{
+                printWindow.print();
+            },700);
+        }
+    }catch(error){
+        console.error(error);
+        alert("Export failed. Please try again.");
+    }
+}
+
+/* ======================================================
+   PROJECT TYPE CHANGE
+====================================================== */
+
+document.getElementById("projectType").addEventListener("change",function(){
+    drawPlan();
+});
 
 /* ======================================================
    INITIAL
 ====================================================== */
 
+const today=new Date().toISOString().split("T")[0];
+document.getElementById("projectDate").value=today;
+document.getElementById("signatureDate").value=today;
 
 resizeCanvas();
-
 drawPlan();
-
 showProperties();
+resizeSignatureCanvas();
+updateBOMFromDesign();
 
+window.addEventListener("resize",function(){
+    resizeSignatureCanvas();
+});
 </script>
 
+<!-- Export library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 </body>
 </html>
