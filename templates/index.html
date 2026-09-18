@@ -1,123 +1,1586 @@
-        420,
-        35
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Container Design System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            background: #374151;
+            padding: 9px 16px;
+            border-radius: 6px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 25px auto;
+            padding: 0 20px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 10px;
+            padding: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .panel h2 {
+            margin-top: 0;
+            font-size: 19px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 12px;
+        }
+
+        .section {
+            margin-bottom: 22px;
+        }
+
+        .section h3 {
+            font-size: 15px;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 9px 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            margin-bottom: 11px;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .button {
+            width: 100%;
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .button.secondary {
+            background: #4b5563;
+            margin-top: 8px;
+        }
+
+        .button.secondary:hover {
+            background: #374151;
+        }
+
+        .drawing-area {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .drawing-area h2 {
+            margin-top: 0;
+        }
+
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .drawing-box {
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 12px;
+            background: #fafafa;
+        }
+
+        .drawing-box h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+
+        canvas {
+            width: 100%;
+            max-width: 100%;
+            height: 330px;
+            display: block;
+            background: white;
+            border: 1px solid #e5e7eb;
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            background: #ecfdf5;
+            color: #065f46;
+            border-radius: 6px;
+            font-size: 13px;
+            display: none;
+        }
+
+        @media (max-width: 950px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <h1>Container Design System</h1>
+
+    <a href="/" class="back-btn">
+        ← Dashboard
+    </a>
+</header>
+
+<div class="container">
+
+    <div class="layout">
+
+        <!-- ========================================= -->
+        <!-- LEFT CONTROL PANEL -->
+        <!-- ========================================= -->
+
+        <div class="panel">
+
+            <h2>Container Design</h2>
+
+            <!-- PRODUCT DETAILS -->
+            <div class="section">
+
+                <h3>Product Details</h3>
+
+                <label for="customerName">
+                    Customer Name
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Customer name"
+                >
+
+                <label for="projectName">
+                    Project Name
+                </label>
+
+                <input
+                    type="text"
+                    id="projectName"
+                    placeholder="Project name"
+                >
+
+                <label for="customerContact">
+                    Customer Contact
+                </label>
+
+                <input
+                    type="text"
+                    id="customerContact"
+                    placeholder="Phone / Email"
+                >
+
+                <label for="projectDate">
+                    Project Date
+                </label>
+
+                <input
+                    type="date"
+                    id="projectDate"
+                >
+
+                <label for="preparedBy">
+                    Prepared By
+                </label>
+
+                <input
+                    type="text"
+                    id="preparedBy"
+                    placeholder="Prepared by"
+                >
+
+                <label for="projectType">
+                    Project Type
+                </label>
+
+                <select id="projectType">
+                    <option value="Standard Container">
+                        Standard Container
+                    </option>
+
+                    <option value="Office Container">
+                        Office Container
+                    </option>
+
+                    <option value="Storage Container">
+                        Storage Container
+                    </option>
+
+                    <option value="Custom Container">
+                        Custom Container
+                    </option>
+                </select>
+
+            </div>
+
+            <!-- DIMENSIONS -->
+            <div class="section">
+
+                <h3>Container Dimensions</h3>
+
+                <div class="row">
+
+                    <div>
+                        <label for="length">
+                            Length (ft)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="length"
+                            value="20"
+                            min="1"
+                            step="0.1"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="width">
+                            Width (ft)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="width"
+                            value="8"
+                            min="1"
+                            step="0.1"
+                        >
+                    </div>
+
+                </div>
+
+                <label for="height">
+                    Height (ft)
+                </label>
+
+                <input
+                    type="number"
+                    id="height"
+                    value="8.5"
+                    min="1"
+                    step="0.1"
+                >
+
+            </div>
+
+            <!-- DOOR -->
+            <div class="section">
+
+                <h3>Door</h3>
+
+                <label for="doorEnabled">
+                    Door
+                </label>
+
+                <select id="doorEnabled">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+
+                <label for="doorCount">
+                    Number of Doors
+                </label>
+
+                <input
+                    type="number"
+                    id="doorCount"
+                    value="1"
+                    min="0"
+                    max="10"
+                >
+
+                <div class="row">
+
+                    <div>
+                        <label for="doorWidth">
+                            Door Width (ft)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="doorWidth"
+                            value="3"
+                            min="0.1"
+                            step="0.1"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="doorHeight">
+                            Door Height (ft)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="doorHeight"
+                            value="7"
+                            min="0.1"
+                            step="0.1"
+                        >
+                    </div>
+
+                </div>
+
+                <label for="doorPosition">
+                    Door Position
+                </label>
+
+                <select id="doorPosition">
+
+                    <option value="center">
+                        Center
+                    </option>
+
+                    <option value="left">
+                        Left
+                    </option>
+
+                    <option value="right">
+                        Right
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- WINDOWS -->
+            <div class="section">
+
+                <h3>Windows</h3>
+
+                <label for="windowsEnabled">
+                    Windows
+                </label>
+
+                <select id="windowsEnabled">
+
+                    <option value="yes">
+                        Yes
+                    </option>
+
+                    <option value="no">
+                        No
+                    </option>
+
+                </select>
+
+                <label for="windowCount">
+                    Number of Windows
+                </label>
+
+                <input
+                    type="number"
+                    id="windowCount"
+                    value="2"
+                    min="0"
+                    max="20"
+                >
+
+                <div class="row">
+
+                    <div>
+
+                        <label for="windowWidth">
+                            Window Width (ft)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="windowWidth"
+                            value="3"
+                            min="0.1"
+                            step="0.1"
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <label for="windowHeight">
+                            Window Height (ft)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="windowHeight"
+                            value="3"
+                            min="0.1"
+                            step="0.1"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- PARTITION -->
+            <div class="section">
+
+                <h3>Partition</h3>
+
+                <label for="partitionEnabled">
+                    Partition
+                </label>
+
+                <select id="partitionEnabled">
+
+                    <option value="yes">
+                        Yes
+                    </option>
+
+                    <option value="no">
+                        No
+                    </option>
+
+                </select>
+
+                <label for="partitionPosition">
+                    Partition Position (ft)
+                </label>
+
+                <input
+                    type="number"
+                    id="partitionPosition"
+                    value="10"
+                    min="0"
+                    step="0.1"
+                >
+
+            </div>
+
+            <!-- MATERIAL -->
+            <div class="section">
+
+                <h3>Material Thickness</h3>
+
+                <label for="floorThickness">
+                    Floor Thickness (mm)
+                </label>
+
+                <input
+                    type="number"
+                    id="floorThickness"
+                    value="3"
+                    min="0"
+                    step="0.1"
+                >
+
+                <label for="roofThickness">
+                    Roof Thickness (mm)
+                </label>
+
+                <input
+                    type="number"
+                    id="roofThickness"
+                    value="2"
+                    min="0"
+                    step="0.1"
+                >
+
+                <label for="wallThickness">
+                    Wall Thickness (mm)
+                </label>
+
+                <input
+                    type="number"
+                    id="wallThickness"
+                    value="2"
+                    min="0"
+                    step="0.1"
+                >
+
+            </div>
+
+            <button
+                class="button"
+                onclick="generateDrawing()"
+            >
+                Update Drawing
+            </button>
+
+            <button
+                class="button secondary"
+                onclick="saveProject()"
+            >
+                Save Project
+            </button>
+
+            <div
+                class="status"
+                id="status"
+            >
+                Project saved successfully.
+            </div>
+
+        </div>
+
+
+        <!-- ========================================= -->
+        <!-- DRAWING AREA -->
+        <!-- ========================================= -->
+
+        <div class="drawing-area">
+
+            <h2>Container Drawings</h2>
+
+            <div class="canvas-grid">
+
+                <!-- FRONT -->
+                <div class="drawing-box">
+
+                    <h3>Front Elevation</h3>
+
+                    <canvas
+                        id="frontCanvas"
+                        width="900"
+                        height="330"
+                    ></canvas>
+
+                </div>
+
+
+                <!-- TOP -->
+                <div class="drawing-box">
+
+                    <h3>Top Elevation</h3>
+
+                    <canvas
+                        id="topCanvas"
+                        width="900"
+                        height="330"
+                    ></canvas>
+
+                </div>
+
+
+                <!-- SIDE -->
+                <div class="drawing-box">
+
+                    <h3>Side Elevation</h3>
+
+                    <canvas
+                        id="sideCanvas"
+                        width="900"
+                        height="330"
+                    ></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // =====================================
+    // GET VALUE
+    // =====================================
+
+    function getNumber(id, defaultValue) {
+
+        const value =
+            parseFloat(
+                document.getElementById(id).value
+            );
+
+        return isNaN(value)
+            ? defaultValue
+            : value;
+    }
+
+
+    // =====================================
+    // CLEAR CANVAS
+    // =====================================
+
+    function clearCanvas(canvas) {
+
+        const ctx = canvas.getContext("2d");
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        ctx.fillStyle = "#ffffff";
+
+        ctx.fillRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        return ctx;
+    }
+
+
+    // =====================================
+    // DRAW DIMENSION LINE
+    // =====================================
+
+    function dimensionLine(
+        ctx,
+        x1,
+        y1,
+        x2,
+        y2,
+        text
+    ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(x1, y1);
+
+        ctx.lineTo(x2, y2);
+
+        ctx.stroke();
+
+        ctx.font = "14px Arial";
+
+        ctx.fillStyle = "#000000";
+
+        const midX =
+            (x1 + x2) / 2;
+
+        const midY =
+            (y1 + y2) / 2;
+
+        ctx.fillText(
+            text,
+            midX - 30,
+            midY - 8
+        );
+    }
+
+
+    // =====================================
+    // FRONT DRAWING
+    // =====================================
+
+    function drawFront() {
+
+        const canvas =
+            document.getElementById(
+                "frontCanvas"
+            );
+
+        const ctx =
+            clearCanvas(canvas);
+
+        const width =
+            getNumber("width", 8);
+
+        const height =
+            getNumber("height", 8.5);
+
+        const doorEnabled =
+            document.getElementById(
+                "doorEnabled"
+            ).value === "yes";
+
+        const doorCount =
+            getNumber("doorCount", 1);
+
+        const doorWidth =
+            getNumber("doorWidth", 3);
+
+        const doorHeight =
+            getNumber("doorHeight", 7);
+
+        const doorPosition =
+            document.getElementById(
+                "doorPosition"
+            ).value;
+
+        const windowEnabled =
+            document.getElementById(
+                "windowsEnabled"
+            ).value === "yes";
+
+        const windowCount =
+            getNumber("windowCount", 2);
+
+        const windowWidth =
+            getNumber("windowWidth", 3);
+
+        const windowHeight =
+            getNumber("windowHeight", 3);
+
+
+        const scale =
+            Math.min(
+                700 / width,
+                230 / height
+            );
+
+        const drawWidth =
+            width * scale;
+
+        const drawHeight =
+            height * scale;
+
+        const x =
+            (canvas.width - drawWidth) / 2;
+
+        const y = 35;
+
+
+        // CONTAINER
+        ctx.strokeStyle = "#000000";
+
+        ctx.lineWidth = 2;
+
+        ctx.strokeRect(
+            x,
+            y,
+            drawWidth,
+            drawHeight
+        );
+
+
+        // DOORS
+        if (
+            doorEnabled &&
+            doorCount > 0
+        ) {
+
+            const totalDoorWidth =
+                doorWidth * doorCount * scale;
+
+            let startX;
+
+            if (doorPosition === "left") {
+
+                startX =
+                    x + 15;
+
+            } else if (
+                doorPosition === "right"
+            ) {
+
+                startX =
+                    x +
+                    drawWidth -
+                    totalDoorWidth -
+                    15;
+
+            } else {
+
+                startX =
+                    x +
+                    (drawWidth -
+                    totalDoorWidth) / 2;
+
+            }
+
+            for (
+                let i = 0;
+                i < doorCount;
+                i++
+            ) {
+
+                const dx =
+                    startX +
+                    i *
+                    doorWidth *
+                    scale;
+
+                const dh =
+                    Math.min(
+                        doorHeight,
+                        height
+                    ) * scale;
+
+                const dy =
+                    y +
+                    drawHeight -
+                    dh;
+
+                ctx.strokeStyle =
+                    "#2563eb";
+
+                ctx.lineWidth = 2;
+
+                ctx.strokeRect(
+                    dx,
+                    dy,
+                    doorWidth * scale,
+                    dh
+                );
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    dx,
+                    dy
+                );
+
+                ctx.lineTo(
+                    dx +
+                    doorWidth * scale,
+                    dy +
+                    dh
+                );
+
+                ctx.stroke();
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    dx +
+                    doorWidth * scale,
+                    dy
+                );
+
+                ctx.lineTo(
+                    dx,
+                    dy + dh
+                );
+
+                ctx.stroke();
+
+            }
+
+        }
+
+
+        // WINDOWS
+        if (
+            windowEnabled &&
+            windowCount > 0
+        ) {
+
+            const spacing =
+                drawWidth /
+                (windowCount + 1);
+
+            const wy =
+                y +
+                drawHeight * 0.22;
+
+            for (
+                let i = 1;
+                i <= windowCount;
+                i++
+            ) {
+
+                const ww =
+                    Math.min(
+                        windowWidth,
+                        width / 2
+                    ) * scale;
+
+                const wh =
+                    Math.min(
+                        windowHeight,
+                        height / 2
+                    ) * scale;
+
+                const wx =
+                    x +
+                    spacing * i -
+                    ww / 2;
+
+                ctx.strokeStyle =
+                    "#059669";
+
+                ctx.lineWidth = 2;
+
+                ctx.strokeRect(
+                    wx,
+                    wy,
+                    ww,
+                    wh
+                );
+
+            }
+
+        }
+
+
+        // DIMENSION
+        ctx.strokeStyle = "#000000";
+
+        ctx.lineWidth = 1;
+
+        dimensionLine(
+            ctx,
+            x,
+            y + drawHeight + 30,
+            x + drawWidth,
+            y + drawHeight + 30,
+            "Width: " + width + " ft"
+        );
+
+
+        ctx.save();
+
+        ctx.translate(
+            x - 25,
+            y + drawHeight / 2
+        );
+
+        ctx.rotate(-Math.PI / 2);
+
+        ctx.fillStyle = "#000000";
+
+        ctx.font = "14px Arial";
+
+        ctx.fillText(
+            "Height: " + height + " ft",
+            0,
+            0
+        );
+
+        ctx.restore();
+
+
+        ctx.fillStyle = "#111827";
+
+        ctx.font = "14px Arial";
+
+        ctx.fillText(
+            "Front View",
+            x,
+            315
+        );
+
+    }
+
+
+    // =====================================
+    // TOP DRAWING
+    // =====================================
+
+    function drawTop() {
+
+        const canvas =
+            document.getElementById(
+                "topCanvas"
+            );
+
+        const ctx =
+            clearCanvas(canvas);
+
+        const length =
+            getNumber("length", 20);
+
+        const width =
+            getNumber("width", 8);
+
+        const partitionEnabled =
+            document.getElementById(
+                "partitionEnabled"
+            ).value === "yes";
+
+        const partitionPosition =
+            getNumber(
+                "partitionPosition",
+                length / 2
+            );
+
+
+        const scale =
+            Math.min(
+                700 / length,
+                200 / width
+            );
+
+        const drawLength =
+            length * scale;
+
+        const drawWidth =
+            width * scale;
+
+        const x =
+            (canvas.width - drawLength) / 2;
+
+        const y = 55;
+
+
+        // CONTAINER
+        ctx.strokeStyle = "#000000";
+
+        ctx.lineWidth = 2;
+
+        ctx.strokeRect(
+            x,
+            y,
+            drawLength,
+            drawWidth
+        );
+
+
+        // FLOOR LINES
+        ctx.strokeStyle = "#9ca3af";
+
+        ctx.lineWidth = 1;
+
+        const lineSpacing = 18;
+
+        for (
+            let lx = x + lineSpacing;
+            lx < x + drawLength;
+            lx += lineSpacing
+        ) {
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                lx,
+                y
+            );
+
+            ctx.lineTo(
+                lx,
+                y + drawWidth
+            );
+
+            ctx.stroke();
+
+        }
+
+
+        // PARTITION
+        if (partitionEnabled) {
+
+            const safePosition =
+                Math.max(
+                    0,
+                    Math.min(
+                        partitionPosition,
+                        length
+                    )
+                );
+
+            const px =
+                x +
+                safePosition * scale;
+
+            ctx.strokeStyle =
+                "#dc2626";
+
+            ctx.lineWidth = 3;
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                px,
+                y
+            );
+
+            ctx.lineTo(
+                px,
+                y + drawWidth
+            );
+
+            ctx.stroke();
+
+            ctx.font =
+                "13px Arial";
+
+            ctx.fillStyle =
+                "#dc2626";
+
+            ctx.fillText(
+                "Partition",
+                px + 5,
+                y + 18
+            );
+
+        }
+
+
+        // LENGTH DIMENSION
+        dimensionLine(
+            ctx,
+            x,
+            y + drawWidth + 35,
+            x + drawLength,
+            y + drawWidth + 35,
+            "Length: " + length + " ft"
+        );
+
+
+        ctx.fillStyle =
+            "#111827";
+
+        ctx.font =
+            "14px Arial";
+
+        ctx.fillText(
+            "Top View: " +
+            length +
+            " × " +
+            width +
+            " ft",
+            x,
+            300
+        );
+
+    }
+
+
+    // =====================================
+    // SIDE DRAWING
+    // =====================================
+
+    function drawSide() {
+
+        const canvas =
+            document.getElementById(
+                "sideCanvas"
+            );
+
+        const ctx =
+            clearCanvas(canvas);
+
+        const length =
+            getNumber("length", 20);
+
+        const height =
+            getNumber("height", 8.5);
+
+
+        const scale =
+            Math.min(
+                700 / length,
+                220 / height
+            );
+
+        const drawLength =
+            length * scale;
+
+        const drawHeight =
+            height * scale;
+
+        const x =
+            (canvas.width - drawLength) / 2;
+
+        const y = 45;
+
+
+        // CONTAINER SIDE
+        ctx.strokeStyle =
+            "#000000";
+
+        ctx.lineWidth = 2;
+
+        ctx.strokeRect(
+            x,
+            y,
+            drawLength,
+            drawHeight
+        );
+
+
+        // SIDE RIBS
+        ctx.strokeStyle =
+            "#9ca3af";
+
+        ctx.lineWidth = 1;
+
+        const ribSpacing = 25;
+
+        for (
+            let rx = x + ribSpacing;
+            rx < x + drawLength;
+            rx += ribSpacing
+        ) {
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                rx,
+                y
+            );
+
+            ctx.lineTo(
+                rx,
+                y + drawHeight
+            );
+
+            ctx.stroke();
+
+        }
+
+
+        // LENGTH DIMENSION
+        dimensionLine(
+            ctx,
+            x,
+            y + drawHeight + 35,
+            x + drawLength,
+            y + drawHeight + 35,
+            "Length: " + length + " ft"
+        );
+
+
+        // HEIGHT TEXT
+        ctx.save();
+
+        ctx.translate(
+            x - 25,
+            y + drawHeight / 2
+        );
+
+        ctx.rotate(-Math.PI / 2);
+
+        ctx.fillStyle =
+            "#000000";
+
+        ctx.font =
+            "14px Arial";
+
+        ctx.fillText(
+            "Height: " + height + " ft",
+            0,
+            0
+        );
+
+        ctx.restore();
+
+
+        ctx.fillStyle =
+            "#111827";
+
+        ctx.font =
+            "14px Arial";
+
+        ctx.fillText(
+            "Side View: " +
+            length +
+            " × " +
+            height +
+            " ft",
+            x,
+            310
+        );
+
+    }
+
+
+    // =====================================
+    // GENERATE ALL DRAWINGS
+    // =====================================
+
+    function generateDrawing() {
+
+        drawFront();
+
+        drawTop();
+
+        drawSide();
+
+    }
+
+
+    // =====================================
+    // SAVE PROJECT
+    // =====================================
+
+    async function saveProject() {
+
+        const data = {
+
+            customer_name:
+                document.getElementById(
+                    "customerName"
+                ).value,
+
+            project_name:
+                document.getElementById(
+                    "projectName"
+                ).value,
+
+            customer_contact:
+                document.getElementById(
+                    "customerContact"
+                ).value,
+
+            project_date:
+                document.getElementById(
+                    "projectDate"
+                ).value,
+
+            prepared_by:
+                document.getElementById(
+                    "preparedBy"
+                ).value,
+
+            project_type:
+                document.getElementById(
+                    "projectType"
+                ).value,
+
+            project_data: {
+
+                length:
+                    getNumber(
+                        "length",
+                        20
+                    ),
+
+                width:
+                    getNumber(
+                        "width",
+                        8
+                    ),
+
+                height:
+                    getNumber(
+                        "height",
+                        8.5
+                    ),
+
+                doorEnabled:
+                    document.getElementById(
+                        "doorEnabled"
+                    ).value,
+
+                doorCount:
+                    getNumber(
+                        "doorCount",
+                        1
+                    ),
+
+                doorWidth:
+                    getNumber(
+                        "doorWidth",
+                        3
+                    ),
+
+                doorHeight:
+                    getNumber(
+                        "doorHeight",
+                        7
+                    ),
+
+                doorPosition:
+                    document.getElementById(
+                        "doorPosition"
+                    ).value,
+
+                windowsEnabled:
+                    document.getElementById(
+                        "windowsEnabled"
+                    ).value,
+
+                windowCount:
+                    getNumber(
+                        "windowCount",
+                        2
+                    ),
+
+                windowWidth:
+                    getNumber(
+                        "windowWidth",
+                        3
+                    ),
+
+                windowHeight:
+                    getNumber(
+                        "windowHeight",
+                        3
+                    ),
+
+                partitionEnabled:
+                    document.getElementById(
+                        "partitionEnabled"
+                    ).value,
+
+                partitionPosition:
+                    getNumber(
+                        "partitionPosition",
+                        10
+                    ),
+
+                floorThickness:
+                    getNumber(
+                        "floorThickness",
+                        3
+                    ),
+
+                roofThickness:
+                    getNumber(
+                        "roofThickness",
+                        2
+                    ),
+
+                wallThickness:
+                    getNumber(
+                        "wallThickness",
+                        2
+                    )
+
+            }
+
+        };
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/projects",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(data)
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to save project"
+                );
+
+            }
+
+
+            const result =
+                await response.json();
+
+
+            if (result.success) {
+
+                const status =
+                    document.getElementById(
+                        "status"
+                    );
+
+                status.style.display =
+                    "block";
+
+                setTimeout(
+                    function() {
+
+                        status.style.display =
+                            "none";
+
+                    },
+                    3000
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Project save nahi hua. Please try again."
+            );
+
+        }
+
+    }
+
+
+    // =====================================
+    // PAGE LOAD
+    // =====================================
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            generateDrawing();
+
+        }
     );
 
-    // SCALE
-    const scale = Math.min(
-        500 / width,
-        300 / height
-    );
-
-    const x = 250;
-    const y = 100;
-
-    const drawWidth =
-        width * scale;
-
-    const drawHeight =
-        height * scale;
-
-    // CONTAINER SIDE
-    ctx.strokeStyle = "#000000";
-
-    ctx.lineWidth = 2;
-
-    ctx.strokeRect(
-        x,
-        y,
-        drawWidth,
-        drawHeight
-    );
-
-    // WIDTH DIMENSION
-    const widthY =
-        y + drawHeight + 40;
-
-    ctx.lineWidth = 1;
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        x,
-        widthY
-    );
-
-    ctx.lineTo(
-        x + drawWidth,
-        widthY
-    );
-
-    ctx.stroke();
-
-    // WIDTH TEXT
-    ctx.fillStyle = "#000000";
-
-    ctx.font = "14px Arial";
-
-    ctx.fillText(
-        "Width: " + width + " ft",
-        x + drawWidth / 2 - 40,
-        widthY + 25
-    );
-
-    // HEIGHT DIMENSION
-    const heightX =
-        x - 40;
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        heightX,
-        y
-    );
-
-    ctx.lineTo(
-        heightX,
-        y + drawHeight
-    );
-
-    ctx.stroke();
-
-    // HEIGHT TEXT
-    ctx.save();
-
-    ctx.translate(
-        heightX - 15,
-        y + drawHeight / 2
-    );
-
-    ctx.rotate(-Math.PI / 2);
-
-    ctx.fillText(
-        "Height: " + height + " ft",
-        0,
-        0
-    );
-
-    ctx.restore();
-
-    // SIDE INFORMATION
-    ctx.fillText(
-        "Side View: " +
-        width +
-        " × " +
-        height +
-        " ft",
-        x,
-        450
-    );
-}
-
-
-// =====================================
-// PAGE LOAD
-// =====================================
-
-window.onload = function() {
-
-    generateDrawing();
-
-};
 
 </script>
 
