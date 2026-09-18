@@ -465,6 +465,125 @@ textarea{
     background:white;
 }
 
+
+/* PROJECTS MODAL */
+.projects-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(16,24,40,.55);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.projects-modal.show{display:flex;}
+
+.projects-dialog{
+    width:min(720px,100%);
+    max-height:85vh;
+    overflow:auto;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+    padding:20px;
+}
+
+.projects-dialog-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.projects-dialog-title{
+    font-size:18px;
+    font-weight:700;
+    color:#101828;
+}
+
+.projects-close{
+    border:1px solid #d0d5dd;
+    background:#f2f4f7;
+    border-radius:5px;
+    width:34px;
+    height:34px;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.project-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.project-card{
+    border:1px solid #d0d5dd;
+    border-radius:7px;
+    padding:12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.project-card-info{
+    min-width:0;
+}
+
+.project-card-name{
+    font-weight:700;
+    font-size:14px;
+    color:#101828;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.project-card-meta{
+    margin-top:4px;
+    font-size:11px;
+    color:#667085;
+}
+
+.project-card-actions{
+    display:flex;
+    gap:6px;
+    flex-shrink:0;
+}
+
+.project-load-btn{
+    background:#155eef;
+    color:white;
+    border:none;
+    border-radius:5px;
+    padding:7px 10px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:700;
+}
+
+.project-delete-btn{
+    background:#fee4e2;
+    color:#b42318;
+    border:1px solid #fecdca;
+    border-radius:5px;
+    padding:7px 10px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:700;
+}
+
+.project-empty{
+    padding:25px;
+    text-align:center;
+    color:#667085;
+    font-size:13px;
+}
+
 @media(max-width:1000px){
     .right-panel{display:none;}
     .left-panel{width:300px;}
@@ -570,6 +689,8 @@ textarea{
 <button class="create-btn" onclick="createFloorPlan()">CREATE FLOOR PLAN</button>
 <button class="clear-btn" onclick="clearPlan()">CLEAR DESIGN</button>
 <button class="export-btn" onclick="exportDesign()">EXPORT DESIGN / PDF</button>
+<button class="create-btn" onclick="saveProject()">💾 SAVE PROJECT</button>
+<button class="clear-btn" onclick="openProjects()">📁 MY PROJECTS</button>
 
 </div>
 
@@ -718,6 +839,18 @@ Select an object and drag it anywhere inside the container.
 </div>
 
 </div>
+</div>
+
+
+<!-- MY PROJECTS MODAL -->
+<div class="projects-modal" id="projectsModal" onclick="closeProjectsOnBackdrop(event)">
+    <div class="projects-dialog">
+        <div class="projects-dialog-header">
+            <div class="projects-dialog-title">📁 My Projects</div>
+            <button class="projects-close" onclick="closeProjects()">×</button>
+        </div>
+        <div id="projectList" class="project-list"></div>
+    </div>
 </div>
 
 <!-- Hidden export document -->
@@ -1531,6 +1664,385 @@ async function exportDesign(){
     }catch(error){
         console.error(error);
         alert("Export failed. Please try again.");
+    }
+}
+
+
+/* ======================================================
+   PROJECT SAVE / LOAD / DELETE
+====================================================== */
+
+let currentProjectId = null;
+
+function collectCategoryData(){
+    const data = {};
+
+    for(const category in categories){
+        data[category] = categories[category].map((item,index)=>{
+            const select = document.getElementById(category+"_"+index+"_yesno");
+            const qty = document.getElementById(category+"_"+index+"_qty");
+
+            return {
+                item:item,
+                selected:select ? select.value : "no",
+                qty:qty ? parseInt(qty.value)||1 : 1
+            };
+        });
+    }
+
+    return data;
+}
+
+function restoreCategoryData(data){
+    if(!data) return;
+
+    for(const category in categories){
+        const savedItems = data[category] || [];
+
+        categories[category].forEach((item,index)=>{
+            const select = document.getElementById(category+"_"+index+"_yesno");
+            const qty = document.getElementById(category+"_"+index+"_qty");
+            const saved = savedItems[index];
+
+            if(!select || !qty) return;
+
+            select.value = saved && saved.selected ? saved.selected : "no";
+            qty.value = saved && saved.qty ? saved.qty : 1;
+            qty.disabled = select.value !== "yes";
+        });
+    }
+}
+
+function collectBOMData(){
+    const rows = [];
+
+    document.querySelectorAll("#bomBody tr").forEach(row=>{
+        rows.push({
+            item:row.querySelector(".bom-item")?.value || "",
+            description:row.querySelector(".bom-description")?.value || "",
+            qty:row.querySelector(".bom-qty")?.value || "1",
+            unit:row.querySelector(".bom-unit")?.value || "",
+            material:row.querySelector(".bom-material")?.value || "",
+            remarks:row.querySelector(".bom-remarks")?.value || ""
+        });
+    });
+
+    return rows;
+}
+
+function restoreBOMData(rows){
+    const tbody = document.getElementById("bomBody");
+    tbody.innerHTML = "";
+
+    if(!Array.isArray(rows) || rows.length === 0){
+        addBOMRow("","","1","Nos","","");
+        return;
+    }
+
+    rows.forEach(row=>{
+        addBOMRow(
+            row.item || "",
+            row.description || "",
+            row.qty || 1,
+            row.unit || "Nos",
+            row.material || "",
+            row.remarks || ""
+        );
+    });
+}
+
+function getSignatureData(){
+    try{
+        return signatureCanvas.toDataURL("image/png");
+    }catch(error){
+        return "";
+    }
+}
+
+function restoreSignature(dataUrl){
+    if(!dataUrl) return;
+
+    const image = new Image();
+
+    image.onload = function(){
+        const rect = signatureCanvas.getBoundingClientRect();
+        const ratio = window.devicePixelRatio || 1;
+
+        signatureCanvas.width = Math.max(600, Math.floor(rect.width * ratio));
+        signatureCanvas.height = Math.floor(190 * ratio);
+
+        signatureCtx.setTransform(ratio,0,0,ratio,0,0);
+        signatureCtx.clearRect(0,0,rect.width,190);
+
+        signatureCtx.drawImage(image,0,0,rect.width,190);
+
+        signatureCtx.lineWidth=2;
+        signatureCtx.lineCap="round";
+        signatureCtx.lineJoin="round";
+        signatureCtx.strokeStyle="#101828";
+    };
+
+    image.src = dataUrl;
+}
+
+function collectProjectData(){
+    return {
+        length:document.getElementById("length").value,
+        width:document.getElementById("width").value,
+        height:document.getElementById("height").value,
+        wall:document.getElementById("wall").value,
+        zoom:zoom,
+        planLength:planLength,
+        planWidth:planWidth,
+        categories:collectCategoryData(),
+        objects:objects,
+        bom:collectBOMData(),
+        signature:getSignatureData(),
+        signatureCustomerName:document.getElementById("signatureCustomerName").value,
+        signatureDate:document.getElementById("signatureDate").value
+    };
+}
+
+async function saveProject(){
+    const customerName = document.getElementById("customerName").value.trim();
+    const projectName = document.getElementById("projectName").value.trim();
+
+    if(!customerName){
+        alert("Please enter Customer Name before saving.");
+        document.getElementById("customerName").focus();
+        return;
+    }
+
+    if(!projectName){
+        alert("Please enter Project / Design Name before saving.");
+        document.getElementById("projectName").focus();
+        return;
+    }
+
+    const payload = {
+        customer_name:customerName,
+        project_name:projectName,
+        customer_contact:document.getElementById("customerContact").value,
+        project_date:document.getElementById("projectDate").value,
+        prepared_by:document.getElementById("preparedBy").value,
+        project_type:document.getElementById("projectType").value,
+        project_data:collectProjectData()
+    };
+
+    const isUpdate = currentProjectId !== null;
+    const url = isUpdate
+        ? `/api/projects/${currentProjectId}`
+        : "/api/projects";
+
+    try{
+        const response = await fetch(url,{
+            method:isUpdate ? "PUT" : "POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if(!response.ok){
+            throw new Error(result.error || "Unable to save project.");
+        }
+
+        if(result.id !== undefined && result.id !== null){
+            currentProjectId = result.id;
+        }
+
+        alert(isUpdate ? "Project updated successfully!" : "Project saved successfully!");
+    }catch(error){
+        console.error(error);
+        alert("Save failed: " + error.message);
+    }
+}
+
+async function openProjects(){
+    document.getElementById("projectsModal").classList.add("show");
+    await loadProjects();
+}
+
+function closeProjects(){
+    document.getElementById("projectsModal").classList.remove("show");
+}
+
+function closeProjectsOnBackdrop(event){
+    if(event.target.id === "projectsModal"){
+        closeProjects();
+    }
+}
+
+async function loadProjects(){
+    const list = document.getElementById("projectList");
+    list.innerHTML = '<div class="project-empty">Loading projects...</div>';
+
+    try{
+        const response = await fetch("/api/projects");
+
+        if(!response.ok){
+            throw new Error("Unable to load projects.");
+        }
+
+        const projects = await response.json();
+
+        if(!Array.isArray(projects) || projects.length === 0){
+            list.innerHTML = '<div class="project-empty">No saved projects yet.</div>';
+            return;
+        }
+
+        list.innerHTML = "";
+
+        projects.forEach(project=>{
+            const card = document.createElement("div");
+            card.className = "project-card";
+
+            const info = document.createElement("div");
+            info.className = "project-card-info";
+
+            const name = document.createElement("div");
+            name.className = "project-card-name";
+            name.textContent = project.project_name || "Untitled Project";
+
+            const meta = document.createElement("div");
+            meta.className = "project-card-meta";
+
+            const customer = project.customer_name || "No customer";
+            const date = project.project_date || "";
+            const updated = project.updated_at || project.created_at || "";
+
+            meta.textContent = customer +
+                (date ? " • " + date : "") +
+                (updated ? " • Updated " + updated : "");
+
+            info.appendChild(name);
+            info.appendChild(meta);
+
+            const actions = document.createElement("div");
+            actions.className = "project-card-actions";
+
+            const loadBtn = document.createElement("button");
+            loadBtn.className = "project-load-btn";
+            loadBtn.textContent = "LOAD";
+            loadBtn.onclick = function(){
+                loadProject(project.id);
+            };
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "project-delete-btn";
+            deleteBtn.textContent = "DELETE";
+            deleteBtn.onclick = function(){
+                deleteProject(project.id, project.project_name || "this project");
+            };
+
+            actions.appendChild(loadBtn);
+            actions.appendChild(deleteBtn);
+
+            card.appendChild(info);
+            card.appendChild(actions);
+            list.appendChild(card);
+        });
+    }catch(error){
+        console.error(error);
+        list.innerHTML = '<div class="project-empty">Could not load projects. Please check the Flask server.</div>';
+    }
+}
+
+async function loadProject(id){
+    try{
+        const response = await fetch(`/api/projects/${id}`);
+
+        if(!response.ok){
+            throw new Error("Unable to load project.");
+        }
+
+        const project = await response.json();
+
+        currentProjectId = project.id;
+
+        document.getElementById("customerName").value = project.customer_name || "";
+        document.getElementById("projectName").value = project.project_name || "";
+        document.getElementById("customerContact").value = project.customer_contact || "";
+        document.getElementById("projectDate").value = project.project_date || "";
+        document.getElementById("preparedBy").value = project.prepared_by || "";
+        document.getElementById("projectType").value = project.project_type || "office";
+
+        const data = project.project_data || {};
+
+        document.getElementById("length").value = data.length ?? 20;
+        document.getElementById("width").value = data.width ?? 8;
+        document.getElementById("height").value = data.height ?? 8.5;
+        document.getElementById("wall").value = data.wall ?? 100;
+
+        planLength = parseFloat(data.planLength ?? data.length ?? 20) || 20;
+        planWidth = parseFloat(data.planWidth ?? data.width ?? 8) || 8;
+        zoom = parseFloat(data.zoom ?? 1) || 1;
+        zoom = Math.max(0.5, Math.min(2, zoom));
+
+        restoreCategoryData(data.categories);
+
+        objects = Array.isArray(data.objects) ? data.objects : [];
+        selectedObject = null;
+
+        document.getElementById("signatureCustomerName").value =
+            data.signatureCustomerName || project.customer_name || "";
+
+        document.getElementById("signatureDate").value =
+            data.signatureDate || project.project_date || "";
+
+        resizeCanvas();
+        drawPlan();
+        showProperties();
+
+        if(Array.isArray(data.bom)){
+            restoreBOMData(data.bom);
+        }else{
+            updateBOMFromDesign();
+        }
+
+        updateZoom();
+
+        if(data.signature){
+            restoreSignature(data.signature);
+        }else{
+            clearSignature();
+        }
+
+        closeProjects();
+
+        alert("Project loaded successfully!");
+    }catch(error){
+        console.error(error);
+        alert("Load failed: " + error.message);
+    }
+}
+
+async function deleteProject(id, name){
+    if(!confirm(`Delete "${name}"? This cannot be undone.`)){
+        return;
+    }
+
+    try{
+        const response = await fetch(`/api/projects/${id}`,{
+            method:"DELETE"
+        });
+
+        const result = await response.json();
+
+        if(!response.ok){
+            throw new Error(result.error || "Unable to delete project.");
+        }
+
+        if(currentProjectId === id){
+            currentProjectId = null;
+        }
+
+        await loadProjects();
+    }catch(error){
+        console.error(error);
+        alert("Delete failed: " + error.message);
     }
 }
 
