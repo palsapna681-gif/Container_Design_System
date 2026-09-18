@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Container Design System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .header {
+            background: #12345b;
+            color: white;
+            padding: 18px 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+            opacity: 0.85;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .controls {
+            width: 340px;
+            flex-shrink: 0;
+        }
+
+        .drawing-area {
+            flex: 1;
+            min-height: 650px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #12345b;
+        }
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 9px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .row .field {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #f28c28;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #d97716;
+        }
+
+        #drawing {
+            width: 100%;
+            height: 560px;
+            border: 1px solid #ddd;
+            background: white;
+        }
+
+        .info {
+            margin-top: 12px;
+            background: #eef5ff;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        @media(max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .controls {
+                width: 100%;
+            }
+        }
+
+        /* =========================
+           DASHBOARD
+        ========================== */
+        .dashboard-page {
+            min-height: 100vh;
+            background: #f4f6f8;
+        }
+
+        .dashboard-top {
+            height: 72px;
+            background: #12345b;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+
+        .dashboard-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .dashboard-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            background: #fff;
+            object-fit: contain;
+            padding: 4px;
+        }
+
+        .dashboard-logo-fallback {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            background: #fff;
+            color: #12345b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .dashboard-user {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f28c28;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .dashboard-content {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 35px 25px 50px;
+        }
+
+        .dashboard-welcome h1 {
+            margin: 0;
+            color: #12345b;
+            font-size: 32px;
+        }
+
+        .dashboard-welcome p {
+            margin: 8px 0 28px;
+            color: #667085;
+            font-size: 16px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .dashboard-card {
+            width: 100%;
+            min-height: 145px;
+            margin: 0;
+            padding: 22px;
+            border: 1px solid #e1e5ea;
+            border-radius: 12px;
+            background: #fff;
+            color: #222;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            text-align: left;
+            box-shadow: 0 2px 10px rgba(0,0,0,.06);
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+
+        .dashboard-card:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,.10);
+        }
+
+        .dashboard-card h3 {
+            margin: 3px 0 7px;
+            color: #12345b;
+            font-size: 18px;
+        }
+
+        .dashboard-card p {
+            margin: 0;
+            color: #667085;
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        .dashboard-icon {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 10px;
+            background: #fff2e5;
+            color: #d97716;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .dashboard-note {
+            display: none;
+            margin-top: 22px;
+            padding: 13px 16px;
+            border-radius: 8px;
+            background: #eef5ff;
+            color: #12345b;
+            border: 1px solid #d7e6ff;
+        }
+
+        #editorView {
+            display: none;
+        }
+
+        .editor-toolbar {
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-dashboard-btn {
+            width: auto;
+            margin: 0;
+            padding: 9px 15px;
+            background: #12345b;
+            font-size: 14px;
+        }
+
+        .back-dashboard-btn:hover {
+            background: #0d2846;
+        }
+
+        @media (max-width: 1000px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .dashboard-top {
+                padding: 0 16px;
+            }
+
+            .dashboard-brand {
+                font-size: 17px;
+            }
+
+            .dashboard-content {
+                padding: 25px 15px 40px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    <!-- =========================
+         DASHBOARD
+    ========================== -->
+    <div id="dashboardView" class="dashboard-page">
+        <div class="dashboard-top">
+            <div class="dashboard-brand">
+                <div class="dashboard-logo-fallback">TM</div>
+                <span>Container Design System</span>
+            </div>
+            <div class="dashboard-user">TM</div>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="dashboard-welcome">
+                <h1>Dashboard</h1>
+                <p>Manage your container design projects and business work.</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <button class="dashboard-card" type="button" onclick="openDesignApp()">
+                    <span class="dashboard-icon">⌂</span>
+                    <span>
+                        <h3>Container Design</h3>
+                        <p>Create floor plans &amp; designs</p>
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button" onclick="showDashboardMessage('Customers')">
+                    <span class="dashboard-icon">♙</span>
+                    <span>
+                        <h3>Customers</h3>
+                        <p>Customer records</p>
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button" onclick="showDashboardMessage('Projects')">
+                    <span class="dashboard-icon">▣</span>
+                    <span>
+                        <h3>Projects</h3>
+                        <p>All saved projects</p>
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button" onclick="showDashboardMessage('Quotations')">
+                    <span class="dashboard-icon">₹</span>
+                    <span>
+                        <h3>Quotations</h3>
+                        <p>Prepare quotations</p>
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button" onclick="showDashboardMessage('BOM')">
+                    <span class="dashboard-icon">☷</span>
+                    <span>
+                        <h3>BOM</h3>
+                        <p>Bill of materials</p>
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button" onclick="showDashboardMessage('Payments')">
+                    <span class="dashboard-icon">₹</span>
+                    <span>
+                        <h3>Payments</h3>
+                        <p>Payment tracking</p>
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button" onclick="showDashboardMessage('Expenses')">
+                    <span class="dashboard-icon">↗</span>
+                    <span>
+                        <h3>Expenses</h3>
+                        <p>Expense tracking</p>
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button" onclick="showDashboardMessage('Employees')">
+                    <span class="dashboard-icon">♟</span>
+                    <span>
+                        <h3>Employees</h3>
+                        <p>Team records</p>
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button" onclick="showDashboardMessage('Calendar')">
+                    <span class="dashboard-icon">□</span>
+                    <span>
+                        <h3>Calendar</h3>
+                        <p>Schedule &amp; dates</p>
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button" onclick="showDashboardMessage('To-do')">
+                    <span class="dashboard-icon">✓</span>
+                    <span>
+                        <h3>To-do</h3>
+                        <p>Tasks &amp; follow-ups</p>
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button" onclick="showDashboardMessage('Documents')">
+                    <span class="dashboard-icon">▤</span>
+                    <span>
+                        <h3>Documents</h3>
+                        <p>Project documents</p>
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button" onclick="showDashboardMessage('More')">
+                    <span class="dashboard-icon">•••</span>
+                    <span>
+                        <h3>More</h3>
+                        <p>More tools</p>
+                    </span>
+                </button>
+            </div>
+
+            <div id="dashboardNote" class="dashboard-note"></div>
+        </div>
+    </div>
+
+    <!-- =========================
+         CONTAINER DESIGN EDITOR
+    ========================== -->
+    <div id="editorView">
+        <div class="editor-toolbar">
+            <button class="back-dashboard-btn" type="button" onclick="showDashboard()">
+                ← Back to Dashboard
+            </button>
+        </div>
+    <div class="header">
+        <h1>Container 2D Drawing Generator</h1>
+        <p>Enter dimensions and generate an automatic 2D container drawing</p>
+    </div>
+
+    <div class="container">
+
+        <!-- LEFT SIDE -->
+        <div class="panel controls">
+
+            <h2>Product Details</h2>
+
+            <div class="section-title">Container Dimensions</div>
+
+            <div class="row">
+                <div class="field">
+                    <label>Length (ft)</label>
+                    <input type="number" id="length" value="20" step="0.1">
+                </div>
+
+                <div class="field">
+                    <label>Width (ft)</label>
+                    <input type="number" id="width" value="8" step="0.1">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Height (ft)</label>
+                <input type="number" id="height" value="8.5" step="0.1">
+            </div>
+
+
+            <div class="section-title">Door</div>
+
+            <div class="field">
+                <label>Number of Doors</label>
+                <input type="number" id="doors" value="1" min="0">
+            </div>
+
+            <div class="row">
+                <div class="field">
+<label>Door Width (ft)</label>
+<input type="number" id="doorWidth" value="3" step="0.1">
+
+<label>Door Position</label>
+<select id="doorPosition">
+    <option value="left">Left</option>
+    <option value="center" selected>Center</option>
+    <option value="right">Right</option>
+</select>
+                </div>
+
+                <div class="field">
+                    <label>Door Height (ft)</label>
+                    <input type="number" id="doorHeight" value="7" step="0.1">
+                </div>
+            </div>
+
+
+            <div class="section-title">Windows</div>
+
+            <div class="field">
+                <label>Number of Windows</label>
+                <input type="number" id="windows" value="2" min="0">
+            </div>
+
+            <div class="row">
+                <div class="field">
+                    <label>Window Width (ft)</label>
+                    <input type="number" id="windowWidth" value="4" step="0.1">
+                </div>
+
+                <div class="field">
+                    <label>Window Height (ft)</label>
+                    <input type="number" id="windowHeight" value="3" step="0.1">
+                </div>
+            </div>
+
+
+            <div class="section-title">Partition</div>
+
+            <div class="field">
+                <label>Partition</label>
+
+                <select id="partition">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+
+            <div class="section-title">Material Thickness</div>
+
+            <div class="field">
+                <label>Floor Thickness (mm)</label>
+                <input type="number" id="floor" value="18">
+            </div>
+
+            <div class="field">
+                <label>Roof Sheet (mm)</label>
+                <input type="number" id="roof" value="2">
+            </div>
+
+            <div class="field">
+                <label>Wall Sheet (mm)</label>
+                <input type="number" id="wall" value="2">
+            </div>
+
+            <button onclick="generateDrawing()">
+                UPDATE DRAWING
+            </button>
+
+            <div class="info">
+                Change any dimension and click
+                <b>UPDATE DRAWING</b> to regenerate the drawing.
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="panel drawing-area">
+
+            <h2>2D Drawing Preview</h2>
+
+            <canvas id="drawing"></canvas>
+
+<div style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 20px;">
+    <h3 style="margin: 0 0 10px 0;">TOP ELEVATION</h3>
+    <canvas id="topDrawing"></canvas>
+    <div style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 20px;">
+    <h3 style="margin: 0 0 10px 0;">SIDE ELEVATION</h3>
+    <canvas id="sideDrawing"></canvas>
+</div>
+</div>
+
+        </div>
+
+    </div>
+
+
+
+    </div>
+
+
+<script>
+function openDesignApp() {
+    document.getElementById("dashboardView").style.display = "none";
+    document.getElementById("editorView").style.display = "block";
+    window.scrollTo(0, 0);
+}
+
+function showDashboard() {
+    document.getElementById("editorView").style.display = "none";
+    document.getElementById("dashboardView").style.display = "block";
+    window.scrollTo(0, 0);
+}
+
+function showDashboardMessage(name) {
+    const note = document.getElementById("dashboardNote");
+    note.textContent = name + " module is ready for the next development step. Container Design is currently available.";
+    note.style.display = "block";
+}
+</script>
+  <script>
+
+function generateDrawing() {
+
+    const length = parseFloat(document.getElementById("length").value);
+    const width = parseFloat(document.getElementById("width").value);
+    const height = parseFloat(document.getElementById("height").value);
+
+    const doors = parseInt(document.getElementById("doors").value);
+    const doorWidth = parseFloat(document.getElementById("doorWidth").value);
+    const doorHeight = parseFloat(document.getElementById("doorHeight").value);
+
+    const windows = parseInt(document.getElementById("windows").value);
+    const windowWidth = parseFloat(document.getElementById("windowWidth").value);
+    const windowHeight = parseFloat(document.getElementById("windowHeight").value);
+
+    const partition = document.getElementById("partition").value;
+
+    drawFrontElevation(
+        length, width, height,
+        doors, doorWidth, doorHeight,
+        windows, windowWidth, windowHeight,
+        partition
+    );
+
+    drawTopElevation(length, width, partition);
+
+    drawSideElevation(width, height);
+}
+
+
+// =====================================
+// FRONT ELEVATION
+// =====================================
+
+function drawFrontElevation(
+    length,
+    width,
+    height,
+    doors,
+    doorWidth,
+    doorHeight,
+    windows,
+    windowWidth,
+    windowHeight,
+    partition
+) {
+
+    const canvas = document.getElementById("drawing");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = 1000;
+    canvas.height = 600;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const scale = Math.min(
+        650 / length,
+        350 / height
+    );
+
+    const x = 150;
+    const y = 100;
+
+    const drawWidth = length * scale;
+    const drawHeight = height * scale;
+
+    // TITLE
+    ctx.fillStyle = "#000000";
+    ctx.font = "bold 18px Arial";
+
+    ctx.fillText(
+        "FRONT ELEVATION",
+        x,
+        y - 35
+    );
+
+    // CONTAINER
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 2;
+
+    ctx.strokeRect(
+        x,
+        y,
+        drawWidth,
+        drawHeight
+    );
+
+    // DOOR
+    if (doors > 0) {
+
+        const dWidth = doorWidth * scale;
+        const dHeight = doorHeight * scale;
+
+        const dx =
+            x + drawWidth / 2 - dWidth / 2;
+
+        const dy =
+            y + drawHeight - dHeight;
+
+        ctx.fillStyle = "#eeeeee";
+
+        ctx.fillRect(
+            dx,
+            dy,
+            dWidth,
+            dHeight
+        );
+
+        ctx.strokeStyle = "#000000";
+
+        ctx.strokeRect(
+            dx,
+            dy,
+            dWidth,
+            dHeight
+        );
+
+        ctx.fillStyle = "#000000";
+        ctx.font = "12px Arial";
+
+        ctx.fillText(
+            "DOOR",
+            dx + 5,
+            dy + dHeight / 2
+        );
+    }
+
+    // WINDOWS
+    if (windows > 0) {
+
+        const wWidth = windowWidth * scale;
+        const wHeight = windowHeight * scale;
+
+        const positions = [0.22, 0.78];
+
+        for (
+            let i = 0;
+            i < Math.min(windows, 2);
+            i++
+        ) {
+
+            const wx =
+                x +
+                drawWidth * positions[i] -
+                wWidth / 2;
+
+            const wy =
+                y +
+                drawHeight * 0.25;
+
+            ctx.fillStyle = "#eeeeee";
+
+            ctx.fillRect(
+                wx,
+                wy,
+                wWidth,
+                wHeight
+            );
+
+            ctx.strokeStyle = "#000000";
+
+            ctx.strokeRect(
+                wx,
+                wy,
+                wWidth,
+                wHeight
+            );
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                wx,
+                wy + wHeight / 2
+            );
+
+            ctx.lineTo(
+                wx + wWidth,
+                wy + wHeight / 2
+            );
+
+            ctx.stroke();
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                wx + wWidth / 2,
+                wy
+            );
+
+            ctx.lineTo(
+                wx + wWidth / 2,
+                wy + wHeight
+            );
+
+            ctx.stroke();
+        }
+    }
+
+    // PARTITION
+    if (partition === "yes") {
+
+        const px =
+            x + drawWidth / 2;
+
+        ctx.setLineDash([8, 6]);
+
+        ctx.strokeStyle = "#000000";
+
+        ctx.beginPath();
+
+        ctx.moveTo(px, y);
+
+        ctx.lineTo(
+            px,
+            y + drawHeight
+        );
+
+        ctx.stroke();
+
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = "#000000";
+        ctx.font = "12px Arial";
+
+        ctx.fillText(
+            "PARTITION",
+            px + 5,
+            y + 20
+        );
+    }
+
+    // LENGTH
+    const lengthY =
+        y + drawHeight + 40;
+
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+
+    ctx.moveTo(x, lengthY);
+
+    ctx.lineTo(
+        x + drawWidth,
+        lengthY
+    );
+
+    ctx.stroke();
+
+    ctx.fillStyle = "#000000";
+    ctx.font = "14px Arial";
+
+    ctx.fillText(
+        "Length: " + length + " ft",
+        x + drawWidth / 2 - 45,
+        lengthY + 25
+    );
+
+    // HEIGHT
+    const heightX = x - 40;
+
+    ctx.beginPath();
+
+    ctx.moveTo(heightX, y);
+
+    ctx.lineTo(
+        heightX,
+        y + drawHeight
+    );
+
+    ctx.stroke();
+
+    ctx.save();
+
+    ctx.translate(
+        heightX - 15,
+        y + drawHeight / 2
+    );
+
+    ctx.rotate(-Math.PI / 2);
+
+    ctx.fillText(
+        "Height: " + height + " ft",
+        0,
+        0
+    );
+
+    ctx.restore();
+
+    // INFORMATION
+    ctx.fillText(
+        "Width: " + width + " ft",
+        x,
+        y + drawHeight + 70
+    );
+
+    ctx.fillText(
+        "Floor: " +
+        document.getElementById("floor").value +
+        " mm",
+        x,
+        y + drawHeight + 100
+    );
+
+    ctx.fillText(
+        "Roof: " +
+        document.getElementById("roof").value +
+        " mm",
+        x + 150,
+        y + drawHeight + 100
+    );
+
+    ctx.fillText(
+        "Wall: " +
+        document.getElementById("wall").value +
+        " mm",
+        x + 300,
+        y + drawHeight + 100
+    );
+}
+
+
+// =====================================
+// TOP ELEVATION
+// =====================================
+
+function drawTopElevation(
+    length,
+    width,
+    partition
+) {
+
+    const canvas =
+        document.getElementById("topDrawing");
+
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = 1000;
+    canvas.height = 500;
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    ctx.fillStyle = "#ffffff";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    ctx.fillStyle = "#000000";
+
+    ctx.font = "bold 18px Arial";
+
+    ctx.fillText(
+        "TOP ELEVATION",
+        420,
+        35
+    );
+
+    const scale = Math.min(
+        650 / length,
+        250 / width
+    );
+
+    const x = 150;
+    const y = 100;
+
+    const drawWidth =
+        length * scale;
+
+    const drawHeight =
+        width * scale;
+
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 2;
+
+    ctx.strokeRect(
+        x,
+        y,
+        drawWidth,
+        drawHeight
+    );
+
+    // PARTITION
+    if (partition === "yes") {
+
+        const px =
+            x + drawWidth / 2;
+
+        ctx.setLineDash([8, 6]);
+
+        ctx.beginPath();
+
+        ctx.moveTo(px, y);
+
+        ctx.lineTo(
+            px,
+            y + drawHeight
+        );
+
+        ctx.stroke();
+
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = "#000000";
+        ctx.font = "12px Arial";
+
+        ctx.fillText(
+            "PARTITION",
+            px + 5,
+            y + 20
+        );
+    }
+
+    // LENGTH
+    const lengthY =
+        y + drawHeight + 40;
+
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+
+    ctx.moveTo(x, lengthY);
+
+    ctx.lineTo(
+        x + drawWidth,
+        lengthY
+    );
+
+    ctx.stroke();
+
+    ctx.fillStyle = "#000000";
+    ctx.font = "14px Arial";
+
+    ctx.fillText(
+        "Length: " + length + " ft",
+        x + drawWidth / 2 - 45,
+        lengthY + 25
+    );
+
+    // WIDTH
+    const widthX = x - 40;
+
+    ctx.beginPath();
+
+    ctx.moveTo(widthX, y);
+
+    ctx.lineTo(
+        widthX,
+        y + drawHeight
+    );
+
+    ctx.stroke();
+
+    ctx.save();
+
+    ctx.translate(
+        widthX - 15,
+        y + drawHeight / 2
+    );
+
+    ctx.rotate(-Math.PI / 2);
+
+    ctx.fillText(
+        "Width: " + width + " ft",
+        0,
+        0
+    );
+
+    ctx.restore();
+
+    ctx.fillText(
+        "Top View: " +
+        length +
+        " × " +
+        width +
+        " ft",
+        x,
+        450
+    );
+}
+
+
+// =====================================
+// SIDE ELEVATION
+// =====================================
+
+function drawSideElevation(
+    width,
+    height
+) {
+
+    const canvas =
+        document.getElementById("sideDrawing");
+
+    if (!canvas) return;
+
+    const ctx =
+        canvas.getContext("2d");
+
+    canvas.width = 1000;
+    canvas.height = 500;
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    // WHITE BACKGROUND
+    ctx.fillStyle = "#ffffff";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    // TITLE
+    ctx.fillStyle = "#000000";
+
+    ctx.font = "bold 18px Arial";
+
+    ctx.fillText(
+        "SIDE ELEVATION",
+        420,
+        35
+    );
+
+    // SCALE
+    const scale = Math.min(
+        500 / width,
+        300 / height
+    );
+
+    const x = 250;
+    const y = 100;
+
+    const drawWidth =
+        width * scale;
+
+    const drawHeight =
+        height * scale;
+
+    // CONTAINER SIDE
+    ctx.strokeStyle = "#000000";
+
+    ctx.lineWidth = 2;
+
+    ctx.strokeRect(
+        x,
+        y,
+        drawWidth,
+        drawHeight
+    );
+
+    // WIDTH DIMENSION
+    const widthY =
+        y + drawHeight + 40;
+
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x,
+        widthY
+    );
+
+    ctx.lineTo(
+        x + drawWidth,
+        widthY
+    );
+
+    ctx.stroke();
+
+    // WIDTH TEXT
+    ctx.fillStyle = "#000000";
+
+    ctx.font = "14px Arial";
+
+    ctx.fillText(
+        "Width: " + width + " ft",
+        x + drawWidth / 2 - 40,
+        widthY + 25
+    );
+
+    // HEIGHT DIMENSION
+    const heightX =
+        x - 40;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        heightX,
+        y
+    );
+
+    ctx.lineTo(
+        heightX,
+        y + drawHeight
+    );
+
+    ctx.stroke();
+
+    // HEIGHT TEXT
+    ctx.save();
+
+    ctx.translate(
+        heightX - 15,
+        y + drawHeight / 2
+    );
+
+    ctx.rotate(-Math.PI / 2);
+
+    ctx.fillText(
+        "Height: " + height + " ft",
+        0,
+        0
+    );
+
+    ctx.restore();
+
+    // SIDE INFORMATION
+    ctx.fillText(
+        "Side View: " +
+        width +
+        " × " +
+        height +
+        " ft",
+        x,
+        450
+    );
+}
+
+
+// =====================================
+// PAGE LOAD
+// =====================================
+
+window.onload = function() {
+    generateDrawing();
+    showDashboard();
+};
+
+</script>
